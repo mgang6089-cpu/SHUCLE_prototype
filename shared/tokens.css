@@ -1,0 +1,219 @@
+/* ============================================================
+   Shucle — design tokens (single source of truth)
+
+   Every value below is measured, not estimated.
+   Source tags:
+     [figma]    read from a real Figma layer via the Dev Mode MCP
+     [svg]      read from a `fill` attribute in an exported Figma icon
+     [px]       sampled from the reference screenshot's pixels
+     [designer] given directly by the designer
+   ============================================================ */
+
+:root {
+  /* ---------- Color: brand & route ---------- */
+  --color-brand-1: #2462f7;          /* [figma] badge text, walk icon  [px] boarding/alight marker + ride line */
+  --color-brand-2: #0be04a;          /* [designer] gradient end */
+  --gradient-brand: linear-gradient(
+    90deg,
+    var(--color-brand-1),
+    var(--color-brand-2)
+  );                                 /* [designer] left → right, walk button border */
+  --color-danger: #ec083c;           /* [figma][svg] 호출 취소 accent */
+
+  /* ---------- Color: surface ---------- */
+  --color-surface: #ffffff;          /* [px] sheet */
+  --color-surface-muted: #f7f7fa;    /* [figma][px] route timeline card */
+  --color-surface-navy: #0d2253;     /* [px] ride info card */
+  --color-handle: #ececec;           /* [px] sheet grab handle */
+
+  /* ---------- Color: text ---------- */
+  --color-text-strong: #000000;      /* [figma] route labels, sheet title */
+  --color-text-body: #121212;        /* [figma] hint sheet body */
+  --color-text-button: #222222;      /* [figma][svg] button label + icon */
+  --color-text-on-navy: #ffffff;     /* [px] */
+  --color-text-muted: #9a9ba3;       /* disclaimer — antialiased, approximate */
+
+  /* ---------- Color: border & shadow ---------- */
+  --color-border-strong: #45464c;    /* [figma] hint sheet border */
+  --color-border-subtle: #e8e8ec;    /* [figma] chip and button outline */
+  --shadow-hint: 2px 2px 8px rgb(0 0 0 / 0.25);  /* [figma] */
+  --shadow-float: 0 2px 6px rgb(0 0 0 / 0.12);
+  --shadow-sheet: 0 -2px 16px rgb(0 0 0 / 0.08);
+
+  /* ---------- Typography ---------- */
+  --font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, "Malgun Gothic", sans-serif;
+
+  --font-size-title: 22px;           /* [px] sheet title */
+  --font-size-subtitle: 16px;        /* [px] sheet subtitle */
+  --font-size-route-label: 17px;     /* [figma] 출발 / 도보 19분 */
+  --font-size-route-meta: 15px;      /* [figma] 1166m */
+  --font-size-badge: 14px;           /* [figma] 여유로워요 */
+  --font-size-button: 13px;          /* [figma] 도보 안내 시작하기 */
+  --font-size-hint: 15px;            /* [figma] hint sheet */
+  --font-size-card-title: 17px;      /* [px] D1호차 */
+  --font-size-disclaimer: 13px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ---------- Device frame ---------- */
+  --frame-width: 393px;              /* [figma] */
+  --frame-height: 852px;             /* [figma] */
+
+  /* ---------- Layout ---------- */
+  --gutter: 16px;                    /* [px] card side margin */
+  /* The map crop is the original app's map area at 1:1 (1179x360 device px =
+     393x120 css px), so the resting sheet edge and the map band are the same
+     number — the whole image is visible with no upscale. Dragging the sheet up
+     to --sheet-top-raised is what gives the drawer its travel. */
+  --sheet-top-rest: 120px;           /* [px] design position, lowest the sheet goes */
+  --sheet-entrance: 16px;            /* how far the drawer rises on first show */
+  --head-block-height: 90px;         /* where the ride card parks beneath the header */
+  --sheet-dip-distance: 96px;        /* drop before returning with new contents */
+  --sheet-dip-duration: 760ms;
+  --map-edge: #edf0f0;               /* [px] the map's own bottom edge, so the
+                                        strip the rising drawer uncovers reads
+                                        as more map rather than a white gap */
+  --sheet-top-raised: 40px;          /* dragged up */
+  --sheet-radius: 20px;
+  --card-radius: 16px;
+  --step-gap: 40px;                  /* measured 38, snapped */
+
+  --handle-width: 56px;              /* measured 58, snapped */
+  --handle-height: 4px;              /* [px] */
+  --handle-offset: 8px;              /* measured 10 — equidistant from 8 and 12,
+                                        took the tighter one */
+
+  /* ---------- Icons ---------- */
+  --icon-size: 24px;                 /* exported icons use a 24x24 artboard */
+  --icon-size-sm: 18px;
+
+  /* ---------- Route rail placement ---------- */
+  --rail-inset: 24px;                /* [px] rail x=40, card x=16 */
+  --rail-gap: 24px;                  /* [px] rail right edge 56 → text x=80 */
+
+  /* ---------- Anchor component ----------
+     [figma] component set 182:328 — five State variants. Geometry is identical
+     across variants; only the colors and the trail style change. */
+  --anchor-width: 16px;
+  --anchor-ring-size: 16px;          /* outer circle */
+  --anchor-ring-hole: 6px;           /* inner hole — stays transparent */
+  --anchor-dot-size: 4px;
+  --anchor-dot-pitch: 12px;          /* Figma spaces the dots 10px apart; snapped
+                                        up rather than down so the trail keeps
+                                        reading as dots and not a dashed line */
+  --anchor-dot-offset: calc(var(--anchor-dot-pitch) / 2); /* first dot one pitch
+                                        below the ring */
+  --anchor-line-width: 4px;          /* 이동중 solid line */
+  --anchor-line-tuck: 3px;           /* line starts at y=13, under the ring */
+  --anchor-overhang: 4px;            /* 이동중 reaches the next node's ring and
+                                        stops. Figma's 14px assumes a fixed 78px
+                                        node pitch; here the anchor box already
+                                        stretches to the row, leaving a 2px gap —
+                                        so 4px bridges it and tucks 2px under the
+                                        ring's 5px border, out of sight. */
+
+  --route-step-duration: 2100ms;     /* how long one leg takes to travel */
+  --route-state-transition: 180ms;   /* color settling between states */
+
+  --anchor-boarding: #052e94;        /* 탑승 ring */
+  --anchor-boarding-trail: #143074;  /* 탑승 dots */
+  --anchor-pending: #748bc3;         /* 이동예정 ring + dots, 도착예정 dots */
+  --anchor-active: var(--color-brand-1); /* 도착예정 ring, 이동중 ring + line */
+  --anchor-passed: #a9a9a9;          /* 지나옴 */
+  --anchor-terminal: #fe3559;        /* [px] final 도착 node — not in the Figma set */
+
+  /* ---------- Chip component ---------- */
+  --chip-height: 32px;               /* [figma] 31, snapped */
+  --chip-radius: 27px;               /* [figma] */
+  --chip-gap: 4px;                   /* [figma] 5, snapped */
+  --chip-padding-x: 16px;            /* [figma] 14 — equidistant from 12 and 16,
+                                        took the roomier one */
+  --chip-fg: #414141;                /* [figma][svg] */
+
+  /* ---------- Notice (OS push banner) ---------- */
+  --notice-delay: 2000ms;            /* beat between the screen settling and the push */
+  --notice-hold: 5000ms;             /* matches the OS default for a banner —
+                                        iOS temporary banners and Android
+                                        heads-up notifications both sit for
+                                        about five seconds */
+  --notice-fg: #161615;              /* [figma] */
+  --notice-time-fg: #6c6c6c;         /* [figma] */
+
+  /* ---------- Modal ---------- */
+  --modal-backdrop: rgb(0 0 0 / 0.45);
+  --modal-width: min(369px, calc(100% - 24px)); /* [figma] 186:887 — 12px each side */
+
+  /* The opening notice is about the prototype, not inside the product, so it
+     inverts: brand blue ground, white type. */
+  --intro-bg: var(--color-brand-1);
+  --intro-fg: var(--color-surface);
+  --modal-radius: 24px;              /* [figma] */
+  --modal-bottom: 40px;              /* measured 38 in the shipped app, rounded
+                                        to the 4/8 spacing scale */
+
+  /* ---------- Arrival popup ---------- */
+  --stop-alert-card-bg: #f3f3f6;     /* [figma] */
+  --stop-alert-desc: #656565;        /* [figma] */
+
+  /* ---------- Steps component ----------
+     [figma] component used across the walking-guide screens: an Anchor in the
+     left column, a title and a description in the right. The state drives the
+     text color as well as the Anchor. */
+  --steps-min-height: 84px;
+  --steps-title-size: 18px;
+  --steps-desc-size: 15px;
+  --steps-title-gap: 12px;           /* title pb 10 + column gap 2 */
+
+  --steps-body-width: min(260px, 100%); /* [figma] text column; photos run wider */
+  --steps-photo-width: 160px;        /* [figma] 187:966 */
+  --steps-photo-height: 116px;       /* [figma] 117, snapped */
+  --steps-photo-gap: 4px;            /* [figma] */
+  --steps-action-gap: 24px;          /* below a step's action, e.g. 크게 보기 */
+
+  --steps-fg-passed: #8d8d8d;        /* 지나옴 */
+  --steps-fg-current: #000000;       /* 이동중 */
+  --steps-fg-upcoming: #7b849c;      /* 이동예정 · 도착예정 · 탑승 */
+
+  /* ---------- Select component ---------- */
+  --select-fg: #3b5acb;              /* [figma] picked row's copy */
+  --select-prompt-fg: #414141;       /* [figma] */
+  --select-disclaimer-fg: #a9a9a9;   /* [figma] */
+  --select-field-border: #e6e6ea;    /* [figma] */
+  --select-placeholder-fg: #cccccc;  /* [figma] */
+  --select-tile-size: 120px;         /* [figma] */
+  --select-tile-add-bg: #b9b9b9;     /* [figma] */
+  --gradient-select: linear-gradient(
+    180deg,
+    var(--color-brand-1),
+    var(--anchor-boarding)
+  );                                 /* [svg] picked marker ring */
+
+  /* ---------- Primary action ---------- */
+  --action-bg: #3560ee;              /* [figma] */
+  --action-width: min(344px, calc(100% - 32px)); /* [figma] 343, snapped */
+  --action-height: 56px;             /* [figma] 55, snapped */
+  --action-radius: 17px;             /* [figma] */
+  --action-bottom: 64px;             /* [figma] 63, snapped */
+
+  /* ---------- Badge component ----------
+     [figma] component set 182:784 — three State variants. One shape, three
+     color pairs; the three tinted greys are the same channels permuted. */
+  --badge-radius: 14px;
+  --badge-padding: 8px 12px;         /* [figma] 7, snapped — makes the badge 32px
+                                        tall, matching the chip */
+  --badge-gap: 4px;
+  --badge-icon-width: 9px;
+  --badge-icon-height: 16px;
+
+  --badge-easy-bg: #f3f3f6;
+  --badge-easy-fg: #2462f7;
+  --badge-busy-bg: #f6f5f3;
+  --badge-busy-fg: #c59129;
+  --badge-late-bg: #f6f3f3;
+  --badge-late-fg: #b14141;          /* the 늦음 icon ships as #b04141 — one step
+                                        off its own label; treated as the same */
+}

@@ -1,0 +1,39 @@
+/* ============================================================
+   Views — the drawer's swappable contents
+
+   The map and the drawer are the shell and never move. Navigating replaces
+   only what is inside the drawer, so nothing slides across the screen.
+
+     <section class="view is-active" data-view="ride-status"> … </section>
+     <button data-goto="ride-detail">…</button>
+
+   Anything floating over the drawer that belongs to one view only carries
+   data-for-view and is hidden while another view is showing.
+   ============================================================ */
+
+.view {
+  display: none;
+}
+
+.view.is-active {
+  display: block;
+  animation: view-fade-in 200ms ease both;
+}
+
+@keyframes view-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Taken out of the layout entirely, since these sit in the drawer's flow as
+   often as they float over it. */
+[data-for-view].is-view-hidden {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view.is-active {
+    animation: none;
+  }
+}

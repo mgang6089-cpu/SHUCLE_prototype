@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>탑승 안내 — Shucle</title>
+<link rel="stylesheet" href="shared/tokens.css">
+<link rel="stylesheet" href="shared/base.css">
+<link rel="stylesheet" href="shared/anchor.css">
+<link rel="stylesheet" href="shared/badge.css">
+<link rel="stylesheet" href="shared/chip.css">
+<link rel="stylesheet" href="shared/steps.css">
+<link rel="stylesheet" href="shared/select.css">
+<link rel="stylesheet" href="shared/modal.css">
+<link rel="stylesheet" href="shared/notice.css">
+<link rel="stylesheet" href="shared/views.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div class="device">
+
+  <div class="map">
+    <img class="map__image" src="assets/map.png" alt="현재 위치 주변 지도">
+    <button class="map__button map__button--home" type="button" aria-label="홈">
+      <span class="icon icon--home" aria-hidden="true"></span>
+    </button>
+    <button class="map__button map__button--consult" type="button">1:1 상담</button>
+  </div>
+
+  <section class="sheet" id="sheet" aria-label="탑승 정보">
+    <div class="sheet__grab" id="sheetGrab">
+      <span class="sheet__handle"></span>
+    </div>
+
+    <div class="sheet__scroll" id="sheetScroll">
+
+      <!-- Shell: identical on every screen, so it lives outside the views. -->
+      <div class="head-block">
+      <header class="head">
+        <span class="head__bullet" aria-hidden="true"></span>
+        <h1 class="head__title">16분 후 탑승</h1>
+        <span class="badge" data-state="여유" data-for-view="ride-status walk-guide stop-photos">
+          <span class="badge__icon" aria-hidden="true"></span>
+          <span class="badge__label">여유로워요</span>
+        </span>
+        <button class="chip chip--brand head__action" type="button"
+                data-for-view="transit" data-goto="report-segment">
+          <span class="chip__icon chip__icon--photo" aria-hidden="true"></span>
+          사진 제보
+        </button>
+        <button class="chip head__action" type="button"
+                data-for-view="report-segment report-photos" data-goto="transit">
+          <span class="chip__icon chip__icon--photo" aria-hidden="true"></span>
+          제보 취소
+        </button>
+      </header>
+      <p class="head__subtitle">아방리입구에서 탑승해 주세요.</p>
+      </div>
+
+      <div class="ride-block">
+      <section class="ride" aria-label="차량 정보">
+        <div class="ride__row">
+          <span class="icon icon--car ride__icon" aria-hidden="true"></span>
+          <span class="ride__label">D1호차</span>
+          <span class="ride__ticket">
+            <span class="icon icon--ticket" aria-hidden="true"></span>
+            탑승권
+          </span>
+        </div>
+        <div class="ride__row">
+          <span class="icon icon--seat ride__icon" aria-hidden="true"></span>
+          <span class="ride__label">1A</span>
+          <svg class="ride__chevron" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m10 6 6 6-6 6"/>
+          </svg>
+        </div>
+      </section>
+      </div>
+
+      <!-- Swappable: only the timeline card changes between screens. -->
+      <section class="view is-active" data-view="ride-status" data-title="16분 후 탑승" data-subtitle="아방리입구에서 탑승해 주세요.">
+      <section class="route" aria-label="경로">
+        <ol class="route__list">
+
+          <li class="route-step">
+            <div class="anchor" data-state="이동중">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="route-step__body">
+              <p class="route-step__headline"><span>출발</span><span>도보 19분</span></p>
+              <p class="route-step__meta">1166m</p>
+              <button class="walk-button" type="button" data-goto="walk-guide">
+                <img src="shared/assets/icons/walk-flag.svg" width="11" height="14" alt="">
+                도보 안내 시작하기
+              </button>
+            </div>
+          </li>
+
+          <li class="route-step">
+            <div class="anchor" data-state="도착예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="route-step__body">
+              <p class="route-step__headline"><span>탑승</span><span>오후 9:39</span></p>
+              <p class="route-step__meta">아방리입구</p>
+              <button class="chip" type="button">
+                <span class="chip__icon chip__icon--pin" aria-hidden="true"></span>
+                거리뷰 보기
+              </button>
+            </div>
+          </li>
+
+          <li class="route-step">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="route-step__body">
+              <p class="route-step__headline"><span>하차</span><span>오후 9:48 ~ 9:57</span></p>
+              <p class="route-step__meta">뒷골사거리</p>
+              <button class="chip" type="button">
+                <span class="chip__icon chip__icon--pin" aria-hidden="true"></span>
+                거리뷰 보기
+              </button>
+            </div>
+          </li>
+
+          <li class="route-step route-step--last">
+            <div class="anchor" data-state="도착">
+              <span class="anchor__ring"></span>
+            </div>
+            <div class="route-step__body">
+              <p class="route-step__headline"><span>도착</span><span>도보 3분</span></p>
+            </div>
+          </li>
+
+        </ol>
+
+        <p class="route__disclaimer">
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path fill="currentColor" d="M11 7h2v6h-2zM11 15h2v2h-2z"/>
+          </svg>
+          도보 경로는 실제와 다를 수 있어요
+        </p>
+      </section>
+      </section>
+
+      <section class="view" data-view="walk-guide" data-title="16분 후 탑승" data-subtitle="아방리입구에서 탑승해 주세요.">
+      <section class="route" aria-label="도보 경로 안내">
+        <ol class="route__list">
+
+          <li class="steps" data-state="이동중" data-auto-step>
+            <div class="anchor" data-state="이동중">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">대양식품에서 직진</p>
+              <p class="steps__desc">은성철강 방향으로 150m</p>
+            </div>
+          </li>
+
+          <!-- Mid-walk the rider slips behind, so the status badge tightens for
+               this leg and eases again on the next. -->
+          <li class="steps" data-state="도착예정" data-auto-step
+              data-badge-state="바쁨" data-step-duration="3400">
+            <div class="anchor" data-state="도착예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">도전과기술 앞 횡단보도</p>
+              <p class="steps__desc">우리방재산업 방면으로 횡단보도 건너기</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정" data-auto-step>
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">클리너빨래방 근방 횡단보도</p>
+              <p class="steps__desc">하늘공조시스템 방면으로 횡단보도 건너기</p>
+            </div>
+          </li>
+
+          <!-- Stand-in for the GPS trigger: nearing the stop offers the photo guide. -->
+          <li class="steps steps--tappable" data-state="이동예정" data-auto-step
+              data-open-modal="stopAlert">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">하늘공조시스템에서 직진</p>
+              <p class="steps__desc">현대창호유리 방면으로 200m 직진</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="탑승">
+            <div class="anchor" data-state="탑승">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">아방리 입구</p>
+              <p class="steps__desc">한광해용달화물 건물을 확인해주세요</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">D1호차 탑승</p>
+              <p class="steps__desc">오후 9:39 · 아방리입구</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">뒷골사거리에서 하차</p>
+              <p class="steps__desc">오후 9:48 ~ 9:57</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">뒷골사거리에서 직진</p>
+              <p class="steps__desc">한빛프라자 방면으로 200m</p>
+            </div>
+          </li>
+          <!-- Continues past the stop, but the walking guide ends before here. -->
+          <!-- End of the journey, and of the prototype. -->
+          <li class="steps steps--last" data-state="도착">
+            <div class="anchor" data-state="도착">
+              <span class="anchor__ring"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">목적지 도착</p>
+              <p class="steps__desc">하차 후 도보 3분</p>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+      </section>
+
+      <section class="view" data-view="stop-photos" data-title="8분 후 탑승" data-subtitle="아방리입구에서 탑승해 주세요.">
+      <section class="route" aria-label="주위 사진 도보 안내">
+        <ol class="route__list">
+
+          <!-- The walk picks up where the popup interrupted it. -->
+          <li class="steps" data-state="이동중" data-auto-step>
+            <div class="anchor" data-state="이동중">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">하늘공조시스템에서 직진</p>
+              <p class="steps__desc">현대창호유리 방면으로 200m 직진</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="도착예정" data-auto-step>
+            <div class="anchor" data-state="도착예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">현대창호유리에서 길 건너기</p>
+              <p class="steps__desc">맞은 편에 뮤직카오디오 간판이 있어요</p>
+              <div class="steps__photos">
+                <div class="steps__photo">
+                  <img src="assets/photos/cross-1.png" alt="뮤직카오디오 간판이 보이는 길 건너편">
+                </div>
+                <div class="steps__photo">
+                  <img src="assets/photos/cross-2.png" alt="횡단보도에서 바라본 건물">
+                </div>
+              </div>
+              <button class="chip" type="button">
+                <span class="chip__icon chip__icon--expand" aria-hidden="true"></span>
+                크게 보기
+              </button>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정" data-auto-step>
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">아방리입구 <small>온신초등학교 방면</small></p>
+              <p class="steps__desc">옛날동태매운탕을 지나치지 않게 조심해요</p>
+              <div class="steps__photos">
+                <div class="steps__photo steps__photo--wide">
+                  <img src="assets/photos/stop.png" alt="아방리입구 정류장 주변">
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- Reaching this leg means the rider has boarded. -->
+          <li class="steps steps--tappable" data-state="이동예정" data-auto-step data-open-modal="boarding">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">D1호차 탑승</p>
+              <p class="steps__desc">오후 9:39 · 아방리입구</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">뒷골사거리에서 하차</p>
+              <p class="steps__desc">오후 9:48 ~ 9:57</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정">
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">뒷골사거리에서 직진</p>
+              <p class="steps__desc">한빛프라자 방면으로 200m</p>
+            </div>
+          </li>
+          <!-- Continues past the stop, but the photo guide ends before here. -->
+          <!-- End of the journey, and of the prototype. -->
+          <li class="steps steps--last" data-state="도착">
+            <div class="anchor" data-state="도착">
+              <span class="anchor__ring"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">목적지 도착</p>
+              <p class="steps__desc">하차 후 도보 3분</p>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+      </section>
+
+      <!-- On board, heading for the drop-off. -->
+      <section class="view" data-view="transit" data-auto-start="held"
+               data-title="하차 오후 2:24~2:35"
+               data-subtitle="뒷골사거리에서 하차해 주세요.">
+      <section class="route" aria-label="남은 여정">
+        <ol class="route__list">
+
+          <li class="steps" data-state="지나옴">
+            <div class="anchor" data-state="지나옴">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">현대창호유리에서 길 건너기</p>
+              <p class="steps__desc">맞은 편에 뮤직카오디오 간판이 있어요</p>
+              <div class="steps__photos">
+                <div class="steps__photo"><img src="assets/photos/cross-1.png" alt=""></div>
+                <div class="steps__photo"><img src="assets/photos/cross-2.png" alt=""></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="steps" data-state="지나옴">
+            <div class="anchor" data-state="지나옴">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">아방리입구 <small>온신초등학교 방면</small></p>
+              <p class="steps__desc">옛날동태매운탕을 지나치지 않게 조심해요</p>
+              <div class="steps__photos">
+                <div class="steps__photo steps__photo--wide"><img src="assets/photos/stop.png" alt=""></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동중" data-auto-step>
+            <div class="anchor" data-state="이동중">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">탑승 <small>오후 2:08</small></p>
+              <p class="steps__desc">아방리 입구</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="도착예정" data-auto-step>
+            <div class="anchor" data-state="도착예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">하차 <small>오후 2:24~2:35</small></p>
+              <p class="steps__desc">뒷골사거리</p>
+            </div>
+          </li>
+
+          <li class="steps" data-state="이동예정" data-auto-step>
+            <div class="anchor" data-state="이동예정">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">뒷골사거리에서 직진</p>
+              <p class="steps__desc">한빛프라자 방면으로 200m</p>
+            </div>
+          </li>
+
+          <!-- End of the journey, and of the prototype. -->
+          <li class="steps steps--last" data-state="도착" data-auto-step data-open-modal="finish">
+            <div class="anchor" data-state="도착">
+              <span class="anchor__ring"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">목적지 도착 <small>오후 2:38</small></p>
+              <p class="steps__desc">하차 후 도보 3분</p>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+      </section>
+
+      <!-- Picking which leg of the walk to report photos for. -->
+      <section class="view" data-view="report-segment"
+               data-title="하차 오후 2:24~2:35"
+               data-subtitle="제보할 구간을 선택해주세요">
+      <section class="route" aria-label="제보할 구간">
+        <ol class="route__list">
+
+          <li class="steps select" data-state="지나옴" data-selected>
+            <div class="anchor" data-state="지나옴">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">현대창호유리에서 길 건너기</p>
+              <p class="steps__desc">맞은 편에 뮤직카오디오 간판이 있어요</p>
+              <div class="steps__photos">
+                <div class="steps__photo"><img src="assets/photos/cross-1.png" alt=""></div>
+                <div class="steps__photo"><img src="assets/photos/cross-2.png" alt=""></div>
+              </div>
+            </div>
+          </li>
+
+          <li class="steps select steps--last" data-state="지나옴">
+            <div class="anchor" data-state="지나옴">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body">
+              <p class="steps__title">아방리입구 <small>온신초등학교 방면</small></p>
+              <p class="steps__desc">옛날동태매운탕을 지나치지 않게 조심해요</p>
+              <div class="steps__photos">
+                <div class="steps__photo steps__photo--wide"><img src="assets/photos/stop.png" alt=""></div>
+              </div>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+      </section>
+
+      <!-- Picking the photos and writing a note. -->
+      <section class="view" data-view="report-photos"
+               data-title="하차 오후 2:24~2:35"
+               data-subtitle="제보할 사진을 선택해주세요">
+      <section class="route" aria-label="제보할 사진">
+        <ol class="route__list">
+
+          <li class="steps select steps--last" data-state="지나옴" data-selected>
+            <div class="anchor" data-state="지나옴">
+              <span class="anchor__ring"></span>
+              <span class="anchor__trail"></span>
+            </div>
+            <div class="steps__body steps__body--relative">
+              <button class="select__close" type="button" data-goto="report-segment" aria-label="제보 구간 다시 선택">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
+                </svg>
+              </button>
+              <p class="steps__title">현대창호유리에서 길 건너기</p>
+              <p class="select__prompt">촬영한 사진을 선택해 주세요</p>
+
+              <div class="select__tiles">
+                <div class="select__tile" data-selected><img src="assets/photos/report-1.png" alt="횡단보도 전경"></div>
+                <div class="select__tile" data-selected><img src="assets/photos/report-2.png" alt="길 건너 간판"></div>
+                <button class="select__tile select__tile--add" type="button" aria-label="사진 추가">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path fill="currentColor" d="M20 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 12H4l3.5-4.5 2.5 3 3.5-4.5L20 17Z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <p class="select__label">간단한 설명을 작성해 주세요 (선택사항)</p>
+              <textarea class="select__note" rows="4"
+                placeholder="촬영된 랜드마크에 대한 설명이나,&#10;경로에 대한 팁을 작성해 주세요."></textarea>
+
+              <p class="select__disclaimer">
+                제보해주신 사진은 셔클의 더 쉬운 길찾기를 위해 사용됩니다.
+                모든 사진은 사전 검수 후 반영되며 다소 시간이 소요될 수 있습니다.
+              </p>
+            </div>
+          </li>
+
+        </ol>
+      </section>
+      </section>
+
+      <!-- Shell again: the cancel button sits below whichever view is showing. -->
+      <button class="cancel" type="button" id="cancelButton"
+              data-for-view="ride-status walk-guide stop-photos">호출 취소</button>
+
+    </div>
+
+    <div class="hint" role="status" id="hint"
+         data-for-view="ride-status walk-guide stop-photos">
+      <img src="shared/assets/icons/chevron-double-down.svg" width="24" height="24" alt="">
+      <span><em>호출 취소</em> 버튼이 하단에 있어요</span>
+    </div>
+  </section>
+
+    <div class="action-bar" data-for-view="report-segment">
+      <button class="action" type="button" data-goto="report-photos">사진 추가하기</button>
+    </div>
+
+    <div class="action-bar" data-for-view="report-photos">
+      <button class="action" type="button" data-goto="transit"
+              data-resume-view="transit"
+              data-notice-title="셔클의 여정에 도움을 주셔서 감사합니다"
+              data-notice-body="사진 등록 후 실제 반영까지는 며칠이 소요될 수 있습니다">사진 제보하기</button>
+    </div>
+
+    <div class="notice" data-for-view="transit" data-delay="1000">
+      <img class="notice__icon" src="assets/app-icon.png" width="38" height="38" alt="">
+      <div class="notice__text">
+        <p class="notice__title">촬영한 사진이 2장 있습니다</p>
+        <p class="notice__body">정류장의 주변 사진을 업로드해 정류장을<br>찾는 여정을 공유해 주세요</p>
+      </div>
+      <span class="notice__time">5분 전</span>
+    </div>
+
+    <div class="notice" data-for-view="stop-photos" data-delay="1000">
+      <img class="notice__icon" src="assets/app-icon.png" width="38" height="38" alt="">
+      <div class="notice__text">
+        <p class="notice__title">정류장에 가까이 근접했습니다</p>
+        <p class="notice__body">주변 사진을 촬영하면 셔클의 도보 여정을<br>개선하는 데 도움이 됩니다</p>
+      </div>
+      <span class="notice__time">지금</span>
+    </div>
+
+    <!-- Near the stop: offer to switch to the photo-led walking guide. -->
+    <!-- Boarded: the walk is over and the ride begins. -->
+    <div class="modal" id="boarding" hidden>
+      <div class="modal__backdrop" data-close-modal></div>
+      <div class="modal__sheet stop-alert stop-alert--compact" role="dialog" aria-modal="true" aria-labelledby="boardingTitle">
+        <span class="stop-alert__badge" aria-hidden="true">
+          <span class="icon icon--car"></span>
+        </span>
+        <h2 class="stop-alert__title" id="boardingTitle">D1호차에 탑승했어요</h2>
+        <p class="stop-alert__lead">뒷골사거리까지 16분<br>오후 2:24~2:35 도착 예정</p>
+
+        <button class="stop-alert__confirm stop-alert__confirm--primary" type="button"
+                data-goto-after-dip="transit" data-close-modal>확인</button>
+      </div>
+    </div>
+
+    <!-- Closes the prototype, so it wears the same blue as the opening notice. -->
+    <div class="modal" id="finish" hidden>
+      <div class="modal__backdrop"></div>
+      <div class="modal__sheet intro" role="dialog" aria-modal="true" aria-labelledby="finishTitle">
+        <img class="intro__logo" src="assets/app-icon.png" width="56" height="56" alt="셔클">
+        <h2 class="intro__title" id="finishTitle">도보 안내를 종료합니다</h2>
+        <p class="intro__lead">
+          목적지에 도착했어요.<br>
+          셔클을 이용해 주셔서 감사합니다.
+        </p>
+        <button class="intro__start" type="button" data-restart>처음부터 다시 보기</button>
+      </div>
+    </div>
+
+    <!-- Opens with the prototype, not part of the product. -->
+    <div class="modal" id="intro">
+      <div class="modal__backdrop"></div>
+      <div class="modal__sheet intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+        <img class="intro__logo" src="assets/app-icon.png" width="56" height="56" alt="셔클">
+        <h2 class="intro__title" id="introTitle">정류장까지의 도보 여정</h2>
+        <p class="intro__lead">
+          차량 호출과 결제는 기존과 동일합니다.<br>
+          프로토타입은 호출 완료 직후부터 시작합니다!
+        </p>
+        <button class="intro__start" type="button" data-close-modal>시작하기</button>
+      </div>
+    </div>
+
+    <!-- Near the stop: announce it, show which stop, then offer the photo guide. -->
+    <div class="modal" id="stopAlert" hidden>
+      <div class="modal__backdrop" data-close-modal></div>
+      <div class="modal__sheet stop-alert" role="dialog" aria-modal="true" aria-labelledby="stopAlertTitle">
+        <img class="stop-alert__pin" src="assets/stop-pin.png" width="59" height="69" alt="">
+        <h2 class="stop-alert__title" id="stopAlertTitle">정류장 근처에 도착했어요</h2>
+
+        <div class="stop-alert__card">
+          <p class="stop-alert__code">14027 아방리입구</p>
+          <p class="stop-alert__desc">
+            <strong>온신초등학교</strong> 방면<br>
+            정류장 번호와 주위 사진을 확인해주세요
+          </p>
+          <div class="stop-alert__actions">
+            <button class="chip" type="button">
+              <span class="chip__icon chip__icon--pin" aria-hidden="true"></span>
+              거리뷰 보기
+            </button>
+          </div>
+        </div>
+
+        <p class="stop-alert__lead">주위 사진과 함께 보는<br>도보 안내로 전환할까요?</p>
+
+        <div class="stop-alert__buttons">
+          <button class="stop-alert__confirm" type="button" data-close-modal>나중에</button>
+          <button class="stop-alert__confirm stop-alert__confirm--primary" type="button" data-goto="stop-photos" data-close-modal>전환하기</button>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<script src="shared/views.js"></script>
+<script src="shared/modal.js"></script>
+<script src="shared/select.js"></script>
+<script src="shared/notice.js"></script>
+<script src="shared/route-progress.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

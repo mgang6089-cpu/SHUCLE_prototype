@@ -1,0 +1,202 @@
+/* ============================================================
+   Anchor — a node on the route rail
+   Figma: component set 182:328, five State variants.
+
+   Markup:
+     <div class="anchor" data-state="탑승">
+       <span class="anchor__ring"></span>
+       <span class="anchor__trail"></span>   <!-- omit on the last node -->
+     </div>
+
+   State lives in one attribute so it can be swapped at runtime (the route
+   advances on its own from GPS, not from user input) — colors transition,
+   nothing in the markup moves.
+
+   Height is not fixed. The trail fills whatever space the row gives it and
+   tiles a dot every 10px, so a node beside a taller block simply grows more
+   dots. The dot is a real SVG circle rather than a CSS gradient, which would
+   render the 4px circle without antialiasing and read as a diamond.
+   ============================================================ */
+
+.anchor {
+  --anchor-ring-color: var(--anchor-passed);
+  --anchor-trail-color: var(--anchor-passed);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--anchor-width);
+  height: 100%;
+}
+
+.anchor[data-state="탑승"] {
+  --anchor-ring-color: var(--anchor-boarding);
+  --anchor-trail-color: var(--anchor-boarding-trail);
+}
+
+.anchor[data-state="이동예정"] {
+  --anchor-ring-color: var(--anchor-pending);
+  --anchor-trail-color: var(--anchor-pending);
+}
+
+.anchor[data-state="도착예정"] {
+  --anchor-ring-color: var(--anchor-active);
+  --anchor-trail-color: var(--anchor-pending);
+}
+
+.anchor[data-state="이동중"] {
+  --anchor-ring-color: var(--anchor-active);
+  --anchor-trail-color: var(--anchor-active);
+}
+
+.anchor[data-state="지나옴"] {
+  --anchor-ring-color: var(--anchor-passed);
+  --anchor-trail-color: var(--anchor-passed);
+}
+
+/* Final node of a route. No Figma variant exists for it yet. */
+.anchor[data-state="도착"] {
+  --anchor-ring-color: var(--anchor-terminal);
+  --anchor-trail-color: var(--anchor-terminal);
+}
+
+.anchor__ring {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: var(--anchor-ring-size);
+  height: var(--anchor-ring-size);
+  border: calc((var(--anchor-ring-size) - var(--anchor-ring-hole)) / 2) solid
+    var(--anchor-ring-color);
+  border-radius: 50%;
+  transition: border-color var(--route-state-transition) ease;
+}
+
+.anchor__trail {
+  flex: 1;
+  width: 100%;
+  min-height: var(--anchor-dot-pitch);
+  background-color: var(--anchor-trail-color);
+  -webkit-mask-image: url("assets/anchor-dot.svg");
+  mask-image: url("assets/anchor-dot.svg");
+  -webkit-mask-size: var(--anchor-width) var(--anchor-dot-pitch);
+  mask-size: var(--anchor-width) var(--anchor-dot-pitch);
+  -webkit-mask-position: center var(--anchor-dot-offset);
+  mask-position: center var(--anchor-dot-offset);
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
+  transition: background-color var(--route-state-transition) ease;
+}
+
+/* 이동중 is the leg being travelled right now. Its trail is one solid line
+   that tucks under its own ring and runs on past the row into the next node's
+   ring, whose transparent hole it fills — so the two read as one connected,
+   in-progress segment. */
+.anchor[data-state="이동중"] .anchor__trail {
+  width: var(--anchor-line-width);
+  margin-top: calc(var(--anchor-line-tuck) * -1);
+  margin-bottom: calc(var(--anchor-overhang) * -1);
+  -webkit-mask-image: none;
+  mask-image: none;
+  background: linear-gradient(
+    180deg,
+    var(--anchor-active),
+    var(--anchor-trail-end, var(--anchor-active))
+  );
+}
+
+/* The marker carries the movement, not the line. Drawing the line in would
+   claim to track the rider's actual pace, which it can't — so instead the node
+   that becomes current snaps into place and keeps a locating pulse, the way a
+   position marker on a map does. */
+.anchor[data-state="이동중"] .anchor__ring {
+  animation: anchor-arrive 560ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* One flash on arrival … */
+.anchor[data-state="이동중"] .anchor__ring::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: var(--anchor-ring-color);
+  pointer-events: none;
+  animation: anchor-flash 640ms ease-out both;
+}
+
+/* … then a locating ripple that keeps time with the walk. */
+.anchor[data-state="이동중"] .anchor__ring::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--anchor-ring-color);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: anchor-pulse var(--route-step-duration) ease-out infinite;
+}
+
+@keyframes anchor-arrive {
+  0% {
+    transform: scale(0.35);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+  76% {
+    transform: scale(0.94);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes anchor-flash {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+
+@keyframes anchor-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* Held back while a push banner has the screen — the walk lights up after. */
+.is-holding .anchor[data-state="이동중"] .anchor__ring,
+.is-holding .anchor[data-state="이동중"] .anchor__ring::before,
+.is-holding .anchor[data-state="이동중"] .anchor__ring::after {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anchor[data-state="이동중"] .anchor__ring,
+  .anchor[data-state="이동중"] .anchor__ring::before,
+  .anchor[data-state="이동중"] .anchor__ring::after {
+    animation: none;
+  }
+}
+
+/* Name the node the line runs into and it blends into that node's color on the
+   way down. Left unset, the line stays one flat blue. */
+.anchor[data-leads-to="탑승"] {
+  --anchor-trail-end: var(--anchor-boarding);
+}
+
+.anchor[data-leads-to="지나옴"] {
+  --anchor-trail-end: var(--anchor-passed);
+}

@@ -1,0 +1,131 @@
+/* ============================================================
+   Steps — one leg of a walking route
+   Figma: "Steps" component (instances 182:571, 188:1083, 182:601, 182:618,
+   182:752 on node 171:2).
+
+   Markup:
+     <li class="steps" data-state="이동중">
+       <div class="anchor" data-state="이동중">
+         <span class="anchor__ring"></span>
+         <span class="anchor__trail"></span>
+       </div>
+       <div class="steps__body">
+         <p class="steps__title">도전과기술 앞 횡단보도</p>
+         <p class="steps__desc">우리방재산업 방면으로 횡단보도 건너기</p>
+       </div>
+     </li>
+
+   One state drives both halves: the Anchor's colors and the text's. Pass the
+   same value to both data-state attributes.
+   ============================================================ */
+
+.steps {
+  --steps-fg: var(--steps-fg-upcoming);
+
+  display: grid;
+  grid-template-columns: var(--anchor-width) 1fr;
+  column-gap: var(--rail-gap);
+  min-height: var(--steps-min-height);
+  color: var(--steps-fg);
+  transition: color var(--route-state-transition) ease;
+}
+
+.steps[data-state="지나옴"] {
+  --steps-fg: var(--steps-fg-passed);
+}
+
+.steps[data-state="이동중"] {
+  --steps-fg: var(--steps-fg-current);
+}
+
+.steps--tappable {
+  cursor: pointer;
+}
+
+/* Anchors an overlay such as the picker's close button. */
+.steps__body--relative {
+  position: relative;
+}
+
+/* The final node has no trail, so it doesn't need a row's worth of height. */
+.steps--last {
+  min-height: 0;
+}
+
+/* The text is held to its column width; the photo strip below is free to run
+   wider than it and scroll. */
+.steps__title,
+.steps__desc {
+  max-width: var(--steps-body-width);
+}
+
+.steps__title {
+  margin: 0;
+  font-size: var(--steps-title-size);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+.steps__desc {
+  margin: var(--steps-title-gap) 0 0;
+  font-size: var(--steps-desc-size);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.4;
+}
+
+/* A place name followed by a lighter direction, e.g. 아방리입구 온신초등학교 방면 */
+.steps__title small {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+}
+
+/* Photo-led guidance: shots of the spot, shown under the instruction. More than
+   one and the strip runs past the column edge and scrolls sideways — the second
+   shot sits half-shown, which is what invites the swipe. */
+.steps__photos {
+  display: flex;
+  gap: var(--steps-photo-gap);
+  margin-top: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+}
+
+.steps__photo {
+  flex: none;
+  width: var(--steps-photo-width);
+  height: var(--steps-photo-height);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--color-surface);
+  scroll-snap-align: start;
+}
+
+/* A lone photo stops at the body's width (260px in Figma) rather than running
+   out to where a second one would sit, so its right edge lines up with the
+   text above it. A pair deliberately overruns and gets clipped. */
+.steps__photo--wide {
+  width: var(--steps-body-width);
+}
+
+.steps__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Legs the rider hasn't reached yet show their photos held back. */
+.steps:not([data-state="이동중"]) .steps__photo {
+  opacity: 0.5;
+}
+
+.steps__photos + .chip {
+  margin-top: 8px;
+  margin-bottom: var(--steps-action-gap);
+}
+
+/* No action under the photos — the strip itself carries the closing gap. */
+.steps__photos:last-child {
+  margin-bottom: var(--steps-action-gap);
+}

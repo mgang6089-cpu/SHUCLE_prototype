@@ -1,0 +1,68 @@
+/* ============================================================
+   Badge — how tight the rider's timing is
+   Figma: component set 182:784, three State variants.
+
+   Markup:
+     <span class="badge" data-state="여유">
+       <span class="badge__icon" aria-hidden="true"></span>
+       <span class="badge__label">여유로워요</span>
+     </span>
+
+   The three variants ship as separate icon files, but their path data is
+   identical down to a rounding digit — only the fill differs. So the icon is
+   one mask tinted by the badge's own `color`, which means a state change is a
+   plain color transition on two properties, not an asset swap.
+
+   Changing data-state does not change the label text: swap that too when the
+   state changes (the label is its own element so it can be crossfaded later).
+   ============================================================ */
+
+.badge {
+  --badge-bg: var(--badge-easy-bg);
+  --badge-fg: var(--badge-easy-fg);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--badge-gap);
+  padding: var(--badge-padding);
+  border-radius: var(--badge-radius);
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+  font-size: var(--font-size-badge);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  transition:
+    background-color 240ms ease,
+    color 240ms ease;
+}
+
+.badge[data-state="여유"] {
+  --badge-bg: var(--badge-easy-bg);
+  --badge-fg: var(--badge-easy-fg);
+}
+
+.badge[data-state="바쁨"] {
+  --badge-bg: var(--badge-busy-bg);
+  --badge-fg: var(--badge-busy-fg);
+}
+
+.badge[data-state="늦음"] {
+  --badge-bg: var(--badge-late-bg);
+  --badge-fg: var(--badge-late-fg);
+}
+
+.badge__icon {
+  flex: none;
+  width: var(--badge-icon-width);
+  height: var(--badge-icon-height);
+  background-color: currentColor;
+  -webkit-mask-image: url("assets/icons/walk-badge.svg");
+  mask-image: url("assets/icons/walk-badge.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}

@@ -1,0 +1,85 @@
+/* ============================================================
+   Notice — the OS push banner resting over the map
+   Figma: 186:902 on node 173:40.
+
+     <div class="notice" data-for-view="stop-photos">
+       <img class="notice__icon" src="assets/app-icon.png" alt="">
+       <div class="notice__text">
+         <p class="notice__title">…</p>
+         <p class="notice__body">…</p>
+       </div>
+       <span class="notice__time">지금</span>
+     </div>
+
+   It sits on 10% white with a white hairline and blurs what's behind it, so it
+   reads as glass over the map rather than a solid card.
+   ============================================================ */
+
+.notice {
+  position: absolute;
+  top: 52px;
+  left: 8px;
+  right: 8px;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 64px;
+  padding: 13px;
+  border: 1px solid #ffffff;
+  border-radius: 22px;
+  background: rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  color: var(--notice-fg);
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
+}
+
+/* A push banner is transient: it drops in, holds, and leaves on its own. */
+.notice.is-dismissed {
+  opacity: 0;
+  transform: translateY(-12px);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice {
+    transition-duration: 1ms;
+  }
+}
+
+.notice__icon {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--color-surface);
+  object-fit: cover;
+}
+
+.notice__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.notice__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+}
+
+.notice__body {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.2;
+}
+
+.notice__time {
+  flex: none;
+  font-size: 14px;
+  color: var(--notice-time-fg);
+}

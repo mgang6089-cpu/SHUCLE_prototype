@@ -1,0 +1,149 @@
+/* ============================================================
+   Select — a Steps row the rider picks, for reporting photos
+   Figma: "Select" component (195:691, 195:947, 197:1174).
+
+     <li class="steps select" data-state="지나옴" data-selected>
+       <div class="anchor" data-state="지나옴">…</div>
+       <div class="steps__body"> … </div>
+     </li>
+
+   It is a Steps row with a selected state layered on: picked, the copy turns
+   brand blue, its photos come back to full strength, and the marker fills with
+   the blue-to-navy gradient. Unpicked rows stay as the greyed-out 지나옴 leg
+   they already were.
+   ============================================================ */
+
+.select {
+  cursor: pointer;
+}
+
+.select[data-selected] {
+  --steps-fg: var(--select-fg);
+}
+
+.select[data-selected] .steps__photo {
+  opacity: 1;
+}
+
+/* A border can't hold a gradient, so the ring is painted across the whole
+   circle and the hole is masked back out. */
+.select[data-selected] .anchor__ring {
+  border-color: transparent;
+  background-image: var(--gradient-select);
+  background-origin: border-box;
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    transparent 2.75px,
+    #000 3.25px
+  );
+  mask-image: radial-gradient(circle at center, transparent 2.75px, #000 3.25px);
+}
+
+/* Everything but the photo strip shares the text column's width, so the whole
+   body lines up on one right edge instead of running to the card's. */
+.select__prompt,
+.select__label,
+.select__note,
+.select__disclaimer {
+  max-width: var(--steps-body-width);
+}
+
+/* A row being reported drops its own description for the picker's prompt. */
+.select__prompt {
+  margin: var(--steps-title-gap) 0 0;
+  font-size: var(--steps-desc-size);
+  color: var(--select-prompt-fg);
+}
+
+/* Photo picker: 120px tiles, the chosen ones ringed in brand blue. */
+.select__tiles {
+  display: flex;
+  gap: var(--steps-photo-gap);
+  margin-top: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+}
+
+.select__tile {
+  flex: none;
+  width: var(--select-tile-size);
+  height: var(--select-tile-size);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background: var(--color-surface);
+  scroll-snap-align: start;
+}
+
+.select__tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.select__tile[data-selected] {
+  border: 2px solid var(--color-brand-1);
+}
+
+.select__tile--add {
+  display: grid;
+  place-items: center;
+  background: var(--select-tile-add-bg);
+  color: var(--color-surface);
+}
+
+.select__tile--add svg {
+  width: 32px;
+  height: 32px;
+}
+
+.select__label {
+  margin: var(--steps-action-gap) 0 0;
+  font-size: var(--steps-desc-size);
+  color: var(--select-prompt-fg);
+}
+
+.select__note {
+  width: 100%;
+  height: 120px;
+  margin-top: 8px;
+  padding: 16px 18px;
+  border: 1px solid var(--select-field-border);
+  border-radius: var(--card-radius);
+  background: var(--color-surface);
+  font: inherit;
+  font-size: var(--steps-desc-size);
+  line-height: 1.5;
+  resize: none;
+}
+
+.select__note::placeholder {
+  color: var(--select-placeholder-fg);
+}
+
+.select__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--chip-fg);
+}
+
+.select__close svg {
+  width: 14px;
+  height: 14px;
+}
+
+.select__disclaimer {
+  margin: var(--steps-action-gap) 0 0;
+  font-size: var(--steps-desc-size);
+  line-height: 1.5;
+  text-align: center;
+  color: var(--select-disclaimer-fg);
+}

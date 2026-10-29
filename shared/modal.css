@@ -1,0 +1,59 @@
+/* ============================================================
+   Modal — a popup anchored to the bottom of the phone, over a dimmed screen
+
+     <div class="modal" id="stopAlert" hidden>
+       <div class="modal__backdrop" data-close-modal></div>
+       <div class="modal__sheet" role="dialog" aria-modal="true"> … </div>
+     </div>
+
+   Opened with data-open-modal="<id>", closed with data-close-modal or Esc.
+   ============================================================ */
+
+.modal {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--modal-backdrop);
+  animation: modal-dim 200ms ease both;
+}
+
+.modal__sheet {
+  position: relative;
+  width: var(--modal-width);
+  margin-bottom: var(--modal-bottom);
+  border-radius: var(--modal-radius);
+  background: var(--color-surface);
+  animation: modal-rise 260ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes modal-dim {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes modal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal__backdrop,
+  .modal__sheet {
+    animation: none;
+  }
+}
