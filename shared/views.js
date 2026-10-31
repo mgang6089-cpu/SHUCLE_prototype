@@ -14,6 +14,17 @@
 
   const belongsTo = (el, name) => el.dataset.forView.split(/\s+/).includes(name);
 
+  /* Every view opens at the top. "instant" rather than assigning scrollTop,
+     because the walk follows its current leg with a smooth scroll — one still
+     in flight would carry on after the switch and leave the new view parked
+     halfway down. The second pass catches a scroll that lands between frames. */
+  const toTop = () => {
+    scroll.scrollTo({ top: 0, behavior: 'instant' });
+    requestAnimationFrame(() =>
+      scroll.scrollTo({ top: 0, behavior: 'instant' })
+    );
+  };
+
   const applyShell = (target) => {
     const name = target.dataset.view;
 
@@ -37,7 +48,7 @@
     views().forEach((view) => view.classList.toggle('is-active', view === target));
     applyShell(target);
 
-    scroll.scrollTop = 0;
+    toTop();
     document.dispatchEvent(
       new CustomEvent('viewchange', { detail: { view: name } })
     );

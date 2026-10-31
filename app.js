@@ -68,12 +68,6 @@
   window.addEventListener('resize', syncHint);
   syncHint();
 
-  // A view always opens at the top; the walk scrolls itself from there as it
-  // advances (shared/route-progress.js).
-  document.addEventListener('viewchange', () => {
-    scroll.scrollTop = 0;
-  });
-
   setTop(REST);
 
   /* data-goto-after-dip drops the drawer away, swaps the view at the bottom of
