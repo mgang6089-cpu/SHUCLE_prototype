@@ -50,10 +50,16 @@
   const follow = (step) => {
     const scroll = document.getElementById('sheetScroll');
     if (!scroll) return;
-    const delta =
-      step.getBoundingClientRect().top - scroll.getBoundingClientRect().top;
+
+    const top = step.getBoundingClientRect().top - scroll.getBoundingClientRect().top;
+    const ceiling = stickyDepth();
+
+    // Already in view below the pinned header — leave the scroll alone rather
+    // than dragging the list down on every single leg.
+    if (top >= ceiling && top + step.offsetHeight <= scroll.clientHeight) return;
+
     scroll.scrollTo({
-      top: scroll.scrollTop + delta - stickyDepth() - PEEK,
+      top: scroll.scrollTop + top - ceiling - PEEK,
       behavior: 'smooth',
     });
   };

@@ -79,16 +79,25 @@
     sheet.closest('.device').appendChild(panel);
 
     const doc = document.scrollingElement || document.documentElement;
+    let entered = performance.now();
+    let peak = 0;
+    document.addEventListener('viewchange', () => {
+      entered = performance.now();
+      peak = 0;
+    });
+
     const read = () => {
       const view = document.querySelector('.view.is-active');
       const max = Math.round(scroll.scrollHeight - scroll.clientHeight);
+      const since = Math.round(performance.now() - entered);
+      peak = Math.max(peak, Math.round(scroll.scrollTop));
       panel.textContent =
         `view        ${view ? view.dataset.view : '-'}\n` +
-        `drawer      ${Math.round(scroll.scrollTop)} / ${max}\n` +
+        `since open  ${since}ms\n` +
+        `drawer      ${Math.round(scroll.scrollTop)} / ${max}   (peak ${peak})\n` +
         `document    ${Math.round(doc.scrollTop)}\n` +
         `body        ${Math.round(document.body.scrollTop)}\n` +
-        `device      ${Math.round(sheet.closest('.device').scrollTop)}\n` +
-        `sheet.top   ${sheet.style.top || '-'}`;
+        `device      ${Math.round(sheet.closest('.device').scrollTop)}`;
       requestAnimationFrame(read);
     };
     read();
