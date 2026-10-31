@@ -52,6 +52,13 @@
   min-height: 0;
 }
 
+/* A grid track won't shrink below its contents by default, so the photo strip
+   would widen the whole column — and push past the card — instead of scrolling
+   inside it. */
+.steps__body {
+  min-width: 0;
+}
+
 /* The text is held to its column width; the photo strip below is free to run
    wider than it and scroll. */
 .steps__title,

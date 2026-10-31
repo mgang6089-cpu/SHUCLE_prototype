@@ -1,0 +1,18 @@
+{
+  "name": "Shucle 도보 여정 프로토타입",
+  "short_name": "Shucle",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2462f7",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "assets/app-icon.png",
+      "sizes": "560x560",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
