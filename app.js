@@ -68,6 +68,32 @@
   window.addEventListener('resize', syncHint);
   syncHint();
 
+  /* Open the prototype with ?debug to read out what is actually scrolling.
+     Nothing shows without the flag. */
+  if (location.search.includes('debug')) {
+    const panel = document.createElement('pre');
+    panel.style.cssText =
+      'position:absolute;left:0;right:0;top:0;z-index:999;margin:0;padding:6px 8px;' +
+      'background:rgba(0,0,0,.78);color:#5f5;font:11px/1.45 ui-monospace,monospace;' +
+      'pointer-events:none;white-space:pre';
+    sheet.closest('.device').appendChild(panel);
+
+    const doc = document.scrollingElement || document.documentElement;
+    const read = () => {
+      const view = document.querySelector('.view.is-active');
+      const max = Math.round(scroll.scrollHeight - scroll.clientHeight);
+      panel.textContent =
+        `view        ${view ? view.dataset.view : '-'}\n` +
+        `drawer      ${Math.round(scroll.scrollTop)} / ${max}\n` +
+        `document    ${Math.round(doc.scrollTop)}\n` +
+        `body        ${Math.round(document.body.scrollTop)}\n` +
+        `device      ${Math.round(sheet.closest('.device').scrollTop)}\n` +
+        `sheet.top   ${sheet.style.top || '-'}`;
+      requestAnimationFrame(read);
+    };
+    read();
+  }
+
   setTop(REST);
 
   /* data-goto-after-dip drops the drawer away, swaps the view at the bottom of
