@@ -197,7 +197,9 @@
   --action-width: min(344px, calc(100% - 32px)); /* [figma] 343, snapped */
   --action-height: 56px;             /* [figma] 55, snapped */
   --action-radius: 17px;             /* [figma] */
-  --action-bottom: 64px;             /* [figma] 63, snapped */
+  --action-bottom: 20px;             /* clear of the screen edge; Figma's 63 sat
+                                        too high once the frame is a real phone
+                                        viewport rather than an 852px canvas */
 
   /* ---------- Badge component ----------
      [figma] component set 182:784 — three State variants. One shape, three

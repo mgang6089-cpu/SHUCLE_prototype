@@ -662,7 +662,10 @@
   z-index: 6;
   display: grid;
   place-items: center;
-  padding-bottom: calc(var(--action-bottom) + env(safe-area-inset-bottom));
+  /* Sits the same distance off the bottom of whatever viewport it lands in,
+     dropping to the home indicator's height where there is one rather than
+     stacking on top of it. */
+  padding-bottom: max(var(--action-bottom), env(safe-area-inset-bottom));
   padding-top: 48px;
   background: linear-gradient(
     180deg,
