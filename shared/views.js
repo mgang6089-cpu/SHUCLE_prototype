@@ -31,13 +31,9 @@
   const GUARD_MS = 700;
   let guardUntil = 0;
   let pinning = 0;
-  const guard = { undone: 0, lastAt: 0 };
 
   const topNow = () => {
-    if (scroll.scrollTop === 0) return;
-    guard.undone += 1;
-    guard.lastAt = Math.round(scroll.scrollTop);
-    scroll.scrollTop = 0;
+    if (scroll.scrollTop !== 0) scroll.scrollTop = 0;
   };
 
   scroll.addEventListener(
@@ -68,9 +64,6 @@
     };
     pinning = requestAnimationFrame(pin);
   };
-
-  // Read out by the ?debug panel, to tell a failed reset from a later scroll.
-  window.__scrollGuard = guard;
 
   const applyShell = (target) => {
     const name = target.dataset.view;
