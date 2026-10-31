@@ -468,7 +468,11 @@
       <section class="route" aria-label="제보할 구간">
         <ol class="route__list">
 
-          <li class="steps select" data-state="지나옴" data-selected>
+          <!-- data-report-photos is what the picker offers for this leg:
+               "<file>::<alt>", separated by |. The headline comes across from
+               the row itself, so it is only written once. -->
+          <li class="steps select" data-state="지나옴" data-selected
+              data-report-photos="report-1.png::횡단보도 전경 | report-2.png::길 건너 간판">
             <div class="anchor" data-state="지나옴">
               <span class="anchor__ring"></span>
               <span class="anchor__trail"></span>
@@ -483,7 +487,8 @@
             </div>
           </li>
 
-          <li class="steps select steps--last" data-state="지나옴">
+          <li class="steps select steps--last" data-state="지나옴"
+              data-report-photos="stop.png::정류장 전경">
             <div class="anchor" data-state="지나옴">
               <span class="anchor__ring"></span>
               <span class="anchor__trail"></span>
@@ -577,7 +582,7 @@
         <p class="notice__title">촬영한 사진이 2장 있습니다</p>
         <p class="notice__body">정류장의 주변 사진을 업로드해 정류장을<br>찾는 여정을 공유해 주세요</p>
       </div>
-      <span class="notice__time">5분 전</span>
+      <span class="notice__time">방금 전</span>
     </div>
 
     <div class="notice" data-for-view="stop-photos" data-delay="1000">
@@ -586,7 +591,7 @@
         <p class="notice__title">정류장에 가까이 근접했습니다</p>
         <p class="notice__body">주변 사진을 촬영하면 셔클의 도보 여정을<br>개선하는 데 도움이 됩니다</p>
       </div>
-      <span class="notice__time">지금</span>
+      <span class="notice__time">방금 전</span>
     </div>
 
     <!-- Near the stop: offer to switch to the photo-led walking guide. -->
