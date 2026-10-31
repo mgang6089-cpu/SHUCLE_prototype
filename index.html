@@ -204,7 +204,9 @@
           <!-- Stand-in for the GPS trigger: nearing the stop offers the photo guide. -->
           <li class="steps steps--tappable" data-state="이동예정" data-auto-step
               data-open-modal="stopAlert">
-            <div class="anchor" data-state="이동예정">
+            <!-- The last leg before the stop: once it is the one under way its
+                 line blends into the stop's navy. -->
+            <div class="anchor" data-state="이동예정" data-leads-to="탑승">
               <span class="anchor__ring"></span>
               <span class="anchor__trail"></span>
             </div>
@@ -582,7 +584,7 @@
         <p class="notice__title">촬영한 사진이 2장 있습니다</p>
         <p class="notice__body">정류장의 주변 사진을 업로드해 정류장을<br>찾는 여정을 공유해 주세요</p>
       </div>
-      <span class="notice__time">방금 전</span>
+      <span class="notice__time">지금</span>
     </div>
 
     <div class="notice" data-for-view="stop-photos" data-delay="1000">
@@ -591,7 +593,7 @@
         <p class="notice__title">정류장에 가까이 근접했습니다</p>
         <p class="notice__body">주변 사진을 촬영하면 셔클의 도보 여정을<br>개선하는 데 도움이 됩니다</p>
       </div>
-      <span class="notice__time">방금 전</span>
+      <span class="notice__time">지금</span>
     </div>
 
     <!-- Near the stop: offer to switch to the photo-led walking guide. -->

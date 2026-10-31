@@ -192,9 +192,11 @@
 }
 
 /* Name the node the line runs into and it blends into that node's color on the
-   way down. Left unset, the line stays one flat blue. */
+   way down. Left unset, the line stays one flat blue. The leg arriving at the
+   stop is where the two overlap: brand blue hands over to the stop's navy
+   rather than stopping dead against it. */
 .anchor[data-leads-to="탑승"] {
-  --anchor-trail-end: var(--anchor-boarding);
+  --anchor-trail-end: var(--anchor-boarding-trail);
 }
 
 .anchor[data-leads-to="지나옴"] {
