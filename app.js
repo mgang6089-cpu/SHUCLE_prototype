@@ -90,14 +90,16 @@
       const view = document.querySelector('.view.is-active');
       const max = Math.round(scroll.scrollHeight - scroll.clientHeight);
       const since = Math.round(performance.now() - entered);
+      const g = window.__scrollGuard || { undone: 0, lastAt: 0 };
       peak = Math.max(peak, Math.round(scroll.scrollTop));
       panel.textContent =
         `view        ${view ? view.dataset.view : '-'}\n` +
         `since open  ${since}ms\n` +
-        `drawer      ${Math.round(scroll.scrollTop)} / ${max}   (peak ${peak})\n` +
-        `document    ${Math.round(doc.scrollTop)}\n` +
-        `body        ${Math.round(document.body.scrollTop)}\n` +
-        `device      ${Math.round(sheet.closest('.device').scrollTop)}`;
+        `steps       ${Math.round(scroll.scrollTop)} / ${max}   (peak ${peak})\n` +
+        `undone      ${g.undone}  (last ${g.lastAt})\n` +
+        `outer       ${Math.round(doc.scrollTop)} / ` +
+        `${Math.round(document.body.scrollTop)} / ` +
+        `${Math.round(sheet.closest('.device').scrollTop)}`;
       requestAnimationFrame(read);
     };
     read();

@@ -14,24 +14,63 @@
 
   const belongsTo = (el, name) => el.dataset.forView.split(/\s+/).includes(name);
 
-  /* Every view opens at the top, and several things push back: a smooth scroll
-     from the walk following its current leg can still be animating, the browser
-     tries to keep whatever was on screen anchored as the views swap, and photos
-     finishing their load shift the layout again. A single assignment loses to
-     any of those, so the top is held every frame until things settle — long
-     enough to outlast an in-flight scroll animation. */
-  const SETTLE_MS = 700;
+  /* Every view opens at the top of the step list, and on a phone three things
+     fight that reset:
+
+       - inertial scrolling. The viewer flicks the list down, taps through, and
+         iOS carries the fling on straight through a scrollTop assignment — as
+         far as it is concerned the gesture is still in charge.
+       - a smooth scroll from the walk following its current leg, still in
+         flight when the view swaps.
+       - the browser pulling a newly shown or newly focused element into view.
+
+     So the reset is not one assignment but a short guarded window: the
+     scroller is shut (which is the part that actually cancels a fling), held
+     at the top every frame, and any scroll that still slips through is undone
+     until the window closes. */
+  const GUARD_MS = 700;
+  let guardUntil = 0;
   let pinning = 0;
+  const guard = { undone: 0, lastAt: 0 };
+
+  const topNow = () => {
+    if (scroll.scrollTop === 0) return;
+    guard.undone += 1;
+    guard.lastAt = Math.round(scroll.scrollTop);
+    scroll.scrollTop = 0;
+  };
+
+  scroll.addEventListener(
+    'scroll',
+    () => {
+      if (performance.now() < guardUntil) topNow();
+    },
+    { passive: true }
+  );
 
   const toTop = () => {
+    guardUntil = performance.now() + GUARD_MS;
+    // Taking the overflow away is what stops a fling mid-flight. The viewer
+    // cannot scroll for these few frames, which is fine right after a
+    // transition they did not scroll into.
+    scroll.style.overflowY = 'hidden';
+    topNow();
+
     cancelAnimationFrame(pinning);
-    const until = performance.now() + SETTLE_MS;
     const pin = () => {
+      topNow();
+      if (performance.now() < guardUntil) {
+        pinning = requestAnimationFrame(pin);
+        return;
+      }
+      scroll.style.overflowY = '';
       scroll.scrollTop = 0;
-      if (performance.now() < until) pinning = requestAnimationFrame(pin);
     };
-    pin();
+    pinning = requestAnimationFrame(pin);
   };
+
+  // Read out by the ?debug panel, to tell a failed reset from a later scroll.
+  window.__scrollGuard = guard;
 
   const applyShell = (target) => {
     const name = target.dataset.view;
@@ -53,14 +92,20 @@
     const target = scroll.querySelector(`.view[data-view="${name}"]`);
     if (!target || target.classList.contains('is-active')) return;
 
+    // A button still holding focus gives the browser a reason to scroll the
+    // outgoing view back into view as it disappears.
+    const focused = document.activeElement;
+    if (focused && focused !== document.body && focused.blur) focused.blur();
+
     views().forEach((view) => view.classList.toggle('is-active', view === target));
     applyShell(target);
 
+    // Before the listeners, so anything that measures the list measures it
+    // from the top; the guard goes on holding it there afterwards.
+    toTop();
     document.dispatchEvent(
       new CustomEvent('viewchange', { detail: { view: name } })
     );
-    // After the listeners, so nothing they do leaves the view part-scrolled.
-    toTop();
   };
 
   document.addEventListener('click', (event) => {
