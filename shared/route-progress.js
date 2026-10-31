@@ -86,7 +86,11 @@
       const state = stateFor(index, pointer);
       step.dataset.state = state;
       const anchor = step.querySelector('.anchor');
-      if (anchor) anchor.dataset.state = state;
+      /* A node that is a place in its own right — the stop, the destination —
+         names its color in data-anchor-state and keeps it throughout. The row's
+         text still follows the walk, so it reads as the leg under way without
+         the marker losing what it is. */
+      if (anchor) anchor.dataset.state = step.dataset.anchorState || state;
     });
     setBadge(steps[pointer].dataset.badgeState || '여유');
   };

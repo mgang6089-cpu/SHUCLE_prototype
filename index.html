@@ -292,7 +292,9 @@
           </li>
 
           <li class="steps" data-state="도착예정" data-auto-step>
-            <div class="anchor" data-state="도착예정">
+            <!-- The leg that arrives at the stop, so its line hands over to
+                 the stop's navy on the way down. -->
+            <div class="anchor" data-state="도착예정" data-leads-to="탑승">
               <span class="anchor__ring"></span>
               <span class="anchor__trail"></span>
             </div>
@@ -314,8 +316,11 @@
             </div>
           </li>
 
-          <li class="steps" data-state="이동예정" data-auto-step>
-            <div class="anchor" data-state="이동예정">
+          <!-- The stop itself. It takes part in the walk, but the marker stays
+               the stop's navy instead of being coloured by the pointer. -->
+          <li class="steps" data-state="이동예정" data-auto-step
+              data-anchor-state="탑승">
+            <div class="anchor" data-state="탑승">
               <span class="anchor__ring"></span>
               <span class="anchor__trail"></span>
             </div>
@@ -438,7 +443,8 @@
           </li>
 
           <li class="steps" data-state="이동예정" data-auto-step>
-            <div class="anchor" data-state="이동예정">
+            <!-- Last leg of all: its line hands over to the destination's pink. -->
+            <div class="anchor" data-state="이동예정" data-leads-to="도착">
               <span class="anchor__ring"></span>
               <span class="anchor__trail"></span>
             </div>
@@ -448,8 +454,10 @@
             </div>
           </li>
 
-          <!-- End of the journey, and of the prototype. -->
-          <li class="steps steps--last" data-state="도착" data-auto-step data-open-modal="finish">
+          <!-- End of the journey, and of the prototype. The destination keeps
+               its own marker rather than being coloured as the leg under way. -->
+          <li class="steps steps--last" data-state="도착" data-auto-step
+              data-anchor-state="도착" data-open-modal="finish">
             <div class="anchor" data-state="도착">
               <span class="anchor__ring"></span>
             </div>

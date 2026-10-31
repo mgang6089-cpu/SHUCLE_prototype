@@ -199,6 +199,10 @@
   --anchor-trail-end: var(--anchor-boarding-trail);
 }
 
+.anchor[data-leads-to="도착"] {
+  --anchor-trail-end: var(--anchor-terminal);
+}
+
 .anchor[data-leads-to="지나옴"] {
   --anchor-trail-end: var(--anchor-passed);
 }
