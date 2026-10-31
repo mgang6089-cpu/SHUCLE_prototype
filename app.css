@@ -191,6 +191,9 @@
 .sheet__scroll {
   flex: 1;
   overflow-y: auto;
+  /* Views swap inside this one scroller; without this the browser tries to keep
+     whatever was on screen anchored and undoes the reset to the top. */
+  overflow-anchor: none;
   padding: 0 var(--gutter) calc(120px + env(safe-area-inset-bottom));
   overscroll-behavior: contain;
 }

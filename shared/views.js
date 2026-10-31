@@ -14,15 +14,20 @@
 
   const belongsTo = (el, name) => el.dataset.forView.split(/\s+/).includes(name);
 
-  /* Every view opens at the top. "instant" rather than assigning scrollTop,
-     because the walk follows its current leg with a smooth scroll — one still
-     in flight would carry on after the switch and leave the new view parked
-     halfway down. The second pass catches a scroll that lands between frames. */
+  /* Every view opens at the top, and several things fight that: a smooth scroll
+     from the walk following its current leg can still be in flight, the browser
+     tries to anchor the scroll to whatever was on screen as the views swap, and
+     photos finishing their load shift the layout again. Assigning scrollTop is
+     used rather than scrollTo({behavior:'instant'}), which some Safari versions
+     reject outright — and it is repeated as the layout settles. */
   const toTop = () => {
-    scroll.scrollTo({ top: 0, behavior: 'instant' });
-    requestAnimationFrame(() =>
-      scroll.scrollTo({ top: 0, behavior: 'instant' })
-    );
+    const reset = () => {
+      scroll.scrollTop = 0;
+    };
+    reset();
+    requestAnimationFrame(reset);
+    setTimeout(reset, 0);
+    setTimeout(reset, 150);
   };
 
   const applyShell = (target) => {
