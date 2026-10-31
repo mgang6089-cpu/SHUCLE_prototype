@@ -14,20 +14,23 @@
 
   const belongsTo = (el, name) => el.dataset.forView.split(/\s+/).includes(name);
 
-  /* Every view opens at the top, and several things fight that: a smooth scroll
-     from the walk following its current leg can still be in flight, the browser
-     tries to anchor the scroll to whatever was on screen as the views swap, and
-     photos finishing their load shift the layout again. Assigning scrollTop is
-     used rather than scrollTo({behavior:'instant'}), which some Safari versions
-     reject outright — and it is repeated as the layout settles. */
+  /* Every view opens at the top, and several things push back: a smooth scroll
+     from the walk following its current leg can still be animating, the browser
+     tries to keep whatever was on screen anchored as the views swap, and photos
+     finishing their load shift the layout again. A single assignment loses to
+     any of those, so the top is held every frame until things settle — long
+     enough to outlast an in-flight scroll animation. */
+  const SETTLE_MS = 700;
+  let pinning = 0;
+
   const toTop = () => {
-    const reset = () => {
+    cancelAnimationFrame(pinning);
+    const until = performance.now() + SETTLE_MS;
+    const pin = () => {
       scroll.scrollTop = 0;
+      if (performance.now() < until) pinning = requestAnimationFrame(pin);
     };
-    reset();
-    requestAnimationFrame(reset);
-    setTimeout(reset, 0);
-    setTimeout(reset, 150);
+    pin();
   };
 
   const applyShell = (target) => {
@@ -53,10 +56,11 @@
     views().forEach((view) => view.classList.toggle('is-active', view === target));
     applyShell(target);
 
-    toTop();
     document.dispatchEvent(
       new CustomEvent('viewchange', { detail: { view: name } })
     );
+    // After the listeners, so nothing they do leaves the view part-scrolled.
+    toTop();
   };
 
   document.addEventListener('click', (event) => {
