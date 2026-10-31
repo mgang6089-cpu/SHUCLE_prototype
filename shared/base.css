@@ -64,11 +64,23 @@ svg {
   box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
 }
 
-/* On a phone there is nothing to frame — the screen is the frame. */
+/* On a phone there is nothing to frame — the screen is the frame.
+
+   svh, not dvh: dvh grows when the browser bars retract, so the frame would be
+   taller than what is actually on screen and its top and bottom would sit
+   behind the bars. svh is the height with the bars showing, which is the one
+   size that is always fully visible. The page itself is pinned so only the
+   drawer inside it scrolls. */
 @media (max-width: 440px) {
+  html,
+  body {
+    height: 100svh;
+    overflow: hidden;
+  }
+
   .device {
     width: 100%;
-    height: 100dvh;
+    height: 100svh;
     margin: 0;
     border-radius: 0;
     box-shadow: none;

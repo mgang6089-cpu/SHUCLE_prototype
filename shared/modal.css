@@ -32,7 +32,7 @@
 .modal__sheet {
   position: relative;
   width: var(--modal-width);
-  margin-bottom: var(--modal-bottom);
+  margin-bottom: calc(var(--modal-bottom) + env(safe-area-inset-bottom));
   border-radius: var(--modal-radius);
   background: var(--color-surface);
   animation: modal-rise 260ms cubic-bezier(0.22, 0.61, 0.36, 1) both;

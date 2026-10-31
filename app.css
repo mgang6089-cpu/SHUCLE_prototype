@@ -191,7 +191,7 @@
 .sheet__scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 0 var(--gutter) 120px;
+  padding: 0 var(--gutter) calc(120px + env(safe-area-inset-bottom));
   overscroll-behavior: contain;
 }
 
@@ -662,7 +662,7 @@
   z-index: 6;
   display: grid;
   place-items: center;
-  padding-bottom: var(--action-bottom);
+  padding-bottom: calc(var(--action-bottom) + env(safe-area-inset-bottom));
   padding-top: 48px;
   background: linear-gradient(
     180deg,
@@ -687,7 +687,7 @@
 
 .hint {
   position: absolute;
-  bottom: 42px;
+  bottom: calc(42px + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
