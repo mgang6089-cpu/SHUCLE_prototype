@@ -76,7 +76,7 @@
   right: 0;
   top: calc(var(--sheet-top-rest) - 48px);
   height: 48px;
-  background: linear-gradient(to bottom, rgb(237 240 240 / 0), var(--map-edge));
+  background: linear-gradient(to bottom, rgb(242 242 239 / 0), var(--map-edge));
   pointer-events: none;
 }
 

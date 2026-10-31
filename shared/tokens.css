@@ -74,7 +74,7 @@
   --head-block-height: 90px;         /* where the ride card parks beneath the header */
   --sheet-dip-distance: 96px;        /* drop before returning with new contents */
   --sheet-dip-duration: 760ms;
-  --map-edge: #edf0f0;               /* [px] the map's own bottom edge, so the
+  --map-edge: #f2f2ef;               /* [px] the map's own bottom edge, so the
                                         strip the rising drawer uncovers reads
                                         as more map rather than a white gap */
   --sheet-top-raised: 40px;          /* dragged up */
