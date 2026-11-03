@@ -8,6 +8,69 @@
    positioned from those; the rest is measured off the reference screenshot's
    pixels. */
 
+/* ============================================================
+   Shell constants — not design tokens
+
+   These are numbers that exist because of how the shell is built, not
+   decisions a designer makes. Nobody draws "the drawer's hole is 120px"; what
+   happened is that the map was cropped 1:1 and came out 120px tall, so the
+   drawer has to rest at the same number or the image stretches. Carry them to
+   another product and they mean nothing.
+
+   They are custom properties all the same, because several unrelated rules
+   share each one and two are read from JS — and when they drift apart it shows
+   (the map stretched 3.3x once, from exactly this).
+
+   Design decisions live in shared/tokens.css. Where a constant below is really
+   a spacing step applied somewhere, it points at the scale rather than
+   restating the number.
+   ============================================================ */
+
+:root {
+  /* ---------- Device frame ---------- */
+  --layout-frame-width: 393px;       /* [figma] */
+  --layout-frame-height: 852px;      /* [figma] */
+
+  /* ---------- Drawer and map ----------
+     The map crop is the original app's map area at 1:1 (1179x360 device px =
+     393x120 css px), so the resting sheet edge and the map band are the same
+     number — the whole image is visible with no upscale. Dragging the sheet up
+     to --layout-sheet-raised is what gives the drawer its travel. */
+  --layout-sheet-rest: 120px;        /* [px] lowest the sheet goes. Also the map
+                                        band's height, and where its blend
+                                        gradient ends. Read from JS. */
+  --layout-sheet-raised: 40px;       /* dragged up — read from JS, not var() */
+  --layout-sheet-entrance: var(--sp-4); /* how far the drawer rises on first show */
+  --layout-sheet-dip: 96px;          /* drop before returning with new contents */
+  --layout-handle-width: 56px;       /* measured 58, snapped */
+  --layout-handle-height: 4px;       /* [px] */
+  --layout-handle-offset: var(--sp-2); /* measured 10 — equidistant from 8 and 12,
+                                        took the tighter one */
+
+  /* ---------- Pinned and floating ---------- */
+  --layout-gutter: var(--sp-4);      /* [px] card side margin. Also bled back out
+                                        with a negative margin where the header
+                                        and ride card reach the drawer's edges */
+  --layout-head-height: 90px;        /* where the ride card parks beneath the header */
+  --layout-scroll-clearance: 120px;  /* floor of the drawer's scroll, so the
+                                        floating action never sits on the last row */
+  --layout-action-bottom: var(--sp-5); /* clear of the screen edge; Figma's 63 sat
+                                        too high once the frame is a real phone
+                                        viewport rather than an 852px canvas */
+
+  /* ---------- Route rail ----------
+     The column the Anchor stands in. Steps and the route card lay their grids
+     against it and the trail's dot mask is this wide, so a mismatch pushes the
+     dots off centre. */
+  --layout-rail-width: 16px;
+  --layout-rail-inset: var(--sp-6);  /* [px] rail x=40, card x=16 */
+  --layout-rail-gap: var(--sp-6);    /* [px] rail right edge 56 → text x=80 */
+  --layout-step-gap: var(--sp-10);   /* measured 38, snapped */
+  --layout-body-width: min(260px, 100%); /* [figma] the text column. Steps,
+                                        Select and PhotoCard all measure
+                                        against it */
+}
+
 /* ---------- Icons ----------
    Exported icons ship a hard-coded fill, so they're drawn as masks: the file
    supplies the shape, `currentColor` supplies the color. Swapping an SVG in

@@ -15,6 +15,13 @@
    The reset (border, background, cursor, inherited font) comes from base.css.
    ============================================================ */
 
+/* On :root rather than on .button, because the shell measures the action bar's
+   footprint against it so the route card can scroll its last rows clear of the
+   floating button. One declaration, two readers. */
+:root {
+  --button-height: 56px;             /* [figma] 55, snapped */
+}
+
 .button {
   --button-width: min(344px, calc(100% - 32px)); /* [figma] 343, snapped */
   --button-radius: 17px;             /* [figma] */

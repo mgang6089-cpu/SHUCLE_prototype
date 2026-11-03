@@ -18,17 +18,30 @@
      --fs-*       font size          --fw-*      font weight
      --sp-*       the spacing scale, in multiples of 4
      --radius-*   corner radii       --dur-*     durations
-     --icon-*     icon box sizes     --layout-*  frame and shell geometry
+     --icon-*     icon box sizes
 
    Spacing snaps to the --sp-* scale. Typography, radii, icon sizes and marker
    geometry keep their measured values — rounding those would move the drawing,
    not the rhythm. Off-scale spacing is left measured too and listed in the
    wiki's log rather than quietly nudged.
 
-   Component-only values (--chip-*, --anchor-*, --badge-*, --steps-*,
-   --select-*, --notice-*, --modal-*, --button-*, --photo-card-*) live beside
-   the component that owns them, in its own stylesheet. Anything two
-   components both reach for is global and sits here.
+   Where the file ends is deliberate. Colour, type, spacing, radii, motion and
+   icon sizes are decisions a designer makes, and changing one changes the
+   product's manner. The file stops there.
+
+   Two kinds of number are therefore NOT here:
+
+     component values   --chip-height, --badge-easy-bg, --anchor-dot-pitch …
+                        Decisions too, but about one component, so they sit on
+                        that component's block selector in its own stylesheet.
+
+     shell constants    --layout-* in app.css. These exist because of how the
+                        shell is built — the drawer rests at 120px because the
+                        map crop came out 120px tall — not because anyone chose
+                        them. Carried to another product they mean nothing.
+
+   Where a shell constant is really a spacing step applied somewhere, it points
+   back at the scale here, so the decision stays in one place.
    ============================================================ */
 
 :root {
@@ -129,45 +142,4 @@
   /* ---------- Icons ---------- */
   --icon-md: 24px;                   /* exported icons use a 24x24 artboard */
   --icon-sm: 18px;
-
-  /* ---------- Button height ----------
-     Button's own base height, but global: the shell measures the action bar's
-     footprint against it so the route card can scroll its last rows clear. A
-     figure two files reach for does not belong to either of them. */
-  --button-height: 56px;             /* [figma] 55, snapped */
-
-  /* ---------- Layout: device frame ---------- */
-  --layout-frame-width: 393px;       /* [figma] */
-  --layout-frame-height: 852px;      /* [figma] */
-
-  /* ---------- Layout: shell ---------- */
-  --layout-gutter: var(--sp-4);      /* [px] card side margin */
-  /* The map crop is the original app's map area at 1:1 (1179x360 device px =
-     393x120 css px), so the resting sheet edge and the map band are the same
-     number — the whole image is visible with no upscale. Dragging the sheet up
-     to --layout-sheet-raised is what gives the drawer its travel. */
-  --layout-sheet-rest: 120px;        /* [px] design position, lowest the sheet goes */
-  --layout-sheet-raised: 40px;       /* dragged up — read from JS, not var() */
-  --layout-sheet-entrance: var(--sp-4); /* how far the drawer rises on first show */
-  --layout-sheet-dip: 96px;          /* drop before returning with new contents */
-  --layout-head-height: 90px;        /* where the ride card parks beneath the header */
-  --layout-scroll-clearance: 120px;  /* floor of the drawer's scroll, so the
-                                        floating action never sits on the last row */
-  --layout-action-bottom: var(--sp-5); /* clear of the screen edge; Figma's 63 sat
-                                        too high once the frame is a real phone
-                                        viewport rather than an 852px canvas */
-  --layout-handle-width: 56px;       /* measured 58, snapped */
-  --layout-handle-height: 4px;       /* [px] */
-  --layout-handle-offset: var(--sp-2); /* measured 10 — equidistant from 8 and 12,
-                                        took the tighter one */
-
-  /* ---------- Layout: route rail ---------- */
-  --layout-rail-width: 16px;         /* the Anchor column, which Steps and the
-                                        route card both lay their grid against */
-  --layout-rail-inset: var(--sp-6);  /* [px] rail x=40, card x=16 */
-  --layout-rail-gap: var(--sp-6);    /* [px] rail right edge 56 → text x=80 */
-  --layout-step-gap: var(--sp-10);   /* measured 38, snapped */
-  --layout-body-width: min(260px, 100%); /* [figma] the text column. Steps,
-                                        Select and PhotoCard all measure
-                                        against it, so it is global */
 }
