@@ -15,11 +15,11 @@
     const to = card.querySelector('.steps__title');
     if (from && to) to.replaceChildren(...from.cloneNode(true).childNodes);
 
-    const tiles = card.querySelector('.select__tiles');
+    const tiles = card.querySelector('.photo-strip--picker');
     if (!tiles) return;
-    const add = tiles.querySelector('.select__tile--add');
+    const add = tiles.querySelector('.photo-card--add');
     tiles
-      .querySelectorAll('.select__tile:not(.select__tile--add)')
+      .querySelectorAll('.photo-card--tile:not(.photo-card--add)')
       .forEach((tile) => tile.remove());
 
     row.dataset.reportPhotos.split('|').forEach((entry) => {
@@ -27,7 +27,7 @@
       if (!file) return;
 
       const tile = document.createElement('div');
-      tile.className = 'select__tile';
+      tile.className = 'photo-card photo-card--tile';
       tile.setAttribute('data-selected', ''); // everything taken, offered up
       const img = document.createElement('img');
       img.src = `assets/photos/${file}`;
@@ -38,7 +38,7 @@
   };
 
   document.addEventListener('click', (event) => {
-    const tile = event.target.closest('.select__tile:not(.select__tile--add)');
+    const tile = event.target.closest('.photo-card--tile:not(.photo-card--add)');
     if (tile) {
       tile.toggleAttribute('data-selected');
       return;

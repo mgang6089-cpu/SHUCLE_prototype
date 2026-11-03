@@ -19,6 +19,25 @@
    ============================================================ */
 
 .anchor {
+  --anchor-ring-size: 16px;          /* outer circle */
+  --anchor-ring-hole: 6px;           /* inner hole — stays transparent */
+  --anchor-dot-size: 4px;            /* 미사용 — the dot ships inside
+                                        anchor-dot.svg, which carries its own
+                                        radius. Kept as the documented figure. */
+  --anchor-dot-pitch: 12px;          /* Figma spaces the dots 10px apart; snapped
+                                        up rather than down so the trail keeps
+                                        reading as dots and not a dashed line */
+  --anchor-dot-offset: calc(var(--anchor-dot-pitch) / 2); /* first dot one pitch
+                                        below the ring */
+  --anchor-line-width: 4px;          /* 이동중 solid line */
+  --anchor-line-tuck: 3px;           /* line starts at y=13, under the ring */
+  --anchor-overhang: 4px;            /* 이동중 reaches the next node's ring and
+                                        stops. Figma's 14px assumes a fixed 78px
+                                        node pitch; here the anchor box already
+                                        stretches to the row, leaving a 2px gap —
+                                        so 4px bridges it and tucks 2px under the
+                                        ring's 5px border, out of sight. */
+
   --anchor-ring-color: var(--route-passed);
   --anchor-trail-color: var(--route-passed);
 

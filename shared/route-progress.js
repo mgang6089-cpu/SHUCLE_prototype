@@ -99,10 +99,10 @@
   const stepDuration = (step) =>
     parseFloat(step.dataset.stepDuration) || duration();
 
-  const token = (name, fallback) =>
-    parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue(name)
-    ) || fallback;
+  /* Notice's own timings live on the banner, not on :root, so they are read
+     off the element the way its stylesheet declares them. */
+  const token = (el, name, fallback) =>
+    parseFloat(getComputedStyle(el).getPropertyValue(name)) || fallback;
 
   /* A push banner gets the screen to itself: the walk waits for it to come and
      go before the first leg lights up. */
@@ -110,8 +110,8 @@
     const notice = document.querySelector('.notice:not(.is-view-hidden)');
     if (!notice) return 0;
     const delay =
-      parseFloat(notice.dataset.delay) || token('--notice-delay', 2000);
-    return delay + token('--notice-hold', 5000) + 600;
+      parseFloat(notice.dataset.delay) || token(notice, '--notice-delay', 2000);
+    return delay + token(notice, '--notice-hold', 5000) + 600;
   };
 
   const start = (view) => {

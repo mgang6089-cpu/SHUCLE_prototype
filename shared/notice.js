@@ -2,14 +2,14 @@
    drop in, hold long enough to be read, then leave. Re-entering the view shows
    them again. */
 (() => {
-  const token = (name, fallback) =>
-    parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue(name)
-    ) || fallback;
+  /* The banner's timings are declared on the banner itself, in notice.css, so
+     they are read off the element rather than off :root. */
+  const token = (el, name, fallback) =>
+    parseFloat(getComputedStyle(el).getPropertyValue(name)) || fallback;
 
   // A banner can come in sooner than the house default with data-delay.
   const delayFor = (notice) =>
-    parseFloat(notice.dataset.delay) || token('--notice-delay', 2000);
+    parseFloat(notice.dataset.delay) || token(notice, '--notice-delay', 2000);
 
   let timers = [];
 
@@ -52,7 +52,7 @@
             timers.push(
               setTimeout(
                 () => notice.classList.add('is-dismissed'),
-                token('--notice-hold', 5000)
+                token(notice, '--notice-hold', 5000)
               )
             );
           }, delayFor(notice))

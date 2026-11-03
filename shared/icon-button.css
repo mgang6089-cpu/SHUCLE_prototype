@@ -1,0 +1,50 @@
+/* ============================================================
+   IconButton — a square control with nothing in it but an icon
+
+   Markup:
+     <button class="icon-button icon-button--close" type="button"
+             aria-label="제보 구간 다시 선택">
+       <svg …></svg>
+     </button>
+
+   The icon centres itself and takes the button's own color, so a variant only
+   has to say how big the square is and what shape its corners are. Where the
+   button is placed is the business of whatever holds it — the map positions
+   its own round control, the picker's close sits in its card's corner.
+
+   The reset comes from base.css.
+   ============================================================ */
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  color: var(--text-secondary);
+}
+
+.icon-button > svg,
+.icon-button > .icon {
+  pointer-events: none;
+}
+
+/* A circle. Used over the map, where the map gives it its size and place. */
+.icon-button--round {
+  border-radius: 50%;
+}
+
+/* Closes what is open underneath it, so it sits in the top-right corner of the
+   card it belongs to rather than in the flow. */
+.icon-button--close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--bg-surface);
+}
+
+.icon-button--close svg {
+  width: 14px;
+  height: 14px;
+}

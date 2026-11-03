@@ -16,6 +16,14 @@
    ============================================================ */
 
 .notice {
+  /* Read from JS off this element, not from :root. */
+  --notice-delay: 2000ms;            /* beat between the screen settling and the push */
+  --notice-hold: 5000ms;             /* matches the OS default for a banner — iOS
+                                        temporary banners and Android heads-up
+                                        notifications both sit about five seconds */
+  --notice-text: #161615;            /* [figma] */
+  --notice-time-text: #6c6c6c;       /* [figma] */
+
   position: absolute;
   top: 52px;
   left: 8px;

@@ -18,6 +18,23 @@
    ============================================================ */
 
 .badge {
+  --badge-radius: 14px;
+  --badge-padding: var(--sp-2) var(--sp-3); /* [figma] 7, snapped — makes the
+                                        badge 32px tall, matching the chip */
+  --badge-gap: var(--sp-1);
+  --badge-icon-width: 9px;
+  --badge-icon-height: 16px;
+
+  /* One shape, three colour pairs; the three tinted greys are the same
+     channels permuted. 여유's blue is the brand blue, so it says so. */
+  --badge-easy-bg: #f3f3f6;
+  --badge-easy-text: var(--brand-1);
+  --badge-busy-bg: #f6f5f3;
+  --badge-busy-text: #c59129;
+  --badge-late-bg: #f6f3f3;
+  --badge-late-text: #b14141;        /* the 늦음 icon ships as #b04141 — one step
+                                        off its own label; treated as the same */
+
   --badge-bg: var(--badge-easy-bg);
   --badge-fg: var(--badge-easy-text);
 

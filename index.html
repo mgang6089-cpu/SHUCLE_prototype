@@ -19,6 +19,10 @@
 <link rel="stylesheet" href="shared/anchor.css">
 <link rel="stylesheet" href="shared/badge.css">
 <link rel="stylesheet" href="shared/chip.css">
+<link rel="stylesheet" href="shared/button.css">
+<link rel="stylesheet" href="shared/icon-button.css">
+<link rel="stylesheet" href="shared/photo-card.css">
+<link rel="stylesheet" href="shared/ride.css">
 <link rel="stylesheet" href="shared/steps.css">
 <link rel="stylesheet" href="shared/select.css">
 <link rel="stylesheet" href="shared/modal.css">
@@ -32,10 +36,10 @@
 
   <div class="map">
     <img class="map__image" src="assets/map.png" alt="현재 위치 주변 지도">
-    <button class="map__button map__button--home" type="button" aria-label="홈">
+    <button class="icon-button icon-button--round map__control" type="button" aria-label="홈">
       <span class="icon icon--home" aria-hidden="true"></span>
     </button>
-    <button class="map__button map__button--consult" type="button">1:1 상담</button>
+    <button class="map__consult" type="button">1:1 상담</button>
   </div>
 
   <section class="sheet" id="sheet" aria-label="탑승 정보">
@@ -103,7 +107,7 @@
             <div class="route-step__body">
               <p class="route-step__headline"><span>출발</span><span>도보 19분</span></p>
               <p class="route-step__meta">1166m</p>
-              <button class="walk-button" type="button" data-goto="walk-guide">
+              <button class="chip chip--walk" type="button" data-goto="walk-guide">
                 <img src="shared/assets/icons/walk-flag.svg" width="11" height="14" alt="">
                 도보 안내 시작하기
               </button>
@@ -301,11 +305,11 @@
             <div class="steps__body">
               <p class="steps__title">현대창호유리에서 길 건너기</p>
               <p class="steps__desc">맞은 편에 뮤직카오디오 간판이 있어요</p>
-              <div class="steps__photos">
-                <div class="steps__photo">
+              <div class="photo-strip">
+                <div class="photo-card">
                   <img src="assets/photos/cross-1.png" alt="뮤직카오디오 간판이 보이는 길 건너편">
                 </div>
-                <div class="steps__photo">
+                <div class="photo-card">
                   <img src="assets/photos/cross-2.png" alt="횡단보도에서 바라본 건물">
                 </div>
               </div>
@@ -327,8 +331,8 @@
             <div class="steps__body">
               <p class="steps__title">아방리입구 <small>온신초등학교 방면</small></p>
               <p class="steps__desc">옛날동태매운탕을 지나치지 않게 조심해요</p>
-              <div class="steps__photos">
-                <div class="steps__photo steps__photo--wide">
+              <div class="photo-strip">
+                <div class="photo-card photo-card--wide">
                   <img src="assets/photos/stop.png" alt="아방리입구 정류장 주변">
                 </div>
               </div>
@@ -399,9 +403,9 @@
             <div class="steps__body">
               <p class="steps__title">현대창호유리에서 길 건너기</p>
               <p class="steps__desc">맞은 편에 뮤직카오디오 간판이 있어요</p>
-              <div class="steps__photos">
-                <div class="steps__photo"><img src="assets/photos/cross-1.png" alt=""></div>
-                <div class="steps__photo"><img src="assets/photos/cross-2.png" alt=""></div>
+              <div class="photo-strip">
+                <div class="photo-card"><img src="assets/photos/cross-1.png" alt=""></div>
+                <div class="photo-card"><img src="assets/photos/cross-2.png" alt=""></div>
               </div>
             </div>
           </li>
@@ -414,8 +418,8 @@
             <div class="steps__body">
               <p class="steps__title">아방리입구 <small>온신초등학교 방면</small></p>
               <p class="steps__desc">옛날동태매운탕을 지나치지 않게 조심해요</p>
-              <div class="steps__photos">
-                <div class="steps__photo steps__photo--wide"><img src="assets/photos/stop.png" alt=""></div>
+              <div class="photo-strip">
+                <div class="photo-card photo-card--wide"><img src="assets/photos/stop.png" alt=""></div>
               </div>
             </div>
           </li>
@@ -490,9 +494,9 @@
             <div class="steps__body">
               <p class="steps__title">현대창호유리에서 길 건너기</p>
               <p class="steps__desc">맞은 편에 뮤직카오디오 간판이 있어요</p>
-              <div class="steps__photos">
-                <div class="steps__photo"><img src="assets/photos/cross-1.png" alt=""></div>
-                <div class="steps__photo"><img src="assets/photos/cross-2.png" alt=""></div>
+              <div class="photo-strip">
+                <div class="photo-card"><img src="assets/photos/cross-1.png" alt=""></div>
+                <div class="photo-card"><img src="assets/photos/cross-2.png" alt=""></div>
               </div>
             </div>
           </li>
@@ -506,8 +510,8 @@
             <div class="steps__body">
               <p class="steps__title">아방리입구 <small>온신초등학교 방면</small></p>
               <p class="steps__desc">옛날동태매운탕을 지나치지 않게 조심해요</p>
-              <div class="steps__photos">
-                <div class="steps__photo steps__photo--wide"><img src="assets/photos/stop.png" alt=""></div>
+              <div class="photo-strip">
+                <div class="photo-card photo-card--wide"><img src="assets/photos/stop.png" alt=""></div>
               </div>
             </div>
           </li>
@@ -529,7 +533,7 @@
               <span class="anchor__trail"></span>
             </div>
             <div class="steps__body steps__body--relative">
-              <button class="select__close" type="button" data-goto="report-segment" aria-label="제보 구간 다시 선택">
+              <button class="icon-button icon-button--close" type="button" data-goto="report-segment" aria-label="제보 구간 다시 선택">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
                 </svg>
@@ -537,10 +541,10 @@
               <p class="steps__title">현대창호유리에서 길 건너기</p>
               <p class="select__prompt">촬영한 사진을 선택해 주세요</p>
 
-              <div class="select__tiles">
-                <div class="select__tile" data-selected><img src="assets/photos/report-1.png" alt="횡단보도 전경"></div>
-                <div class="select__tile" data-selected><img src="assets/photos/report-2.png" alt="길 건너 간판"></div>
-                <button class="select__tile select__tile--add" type="button" aria-label="사진 추가">
+              <div class="photo-strip photo-strip--picker">
+                <div class="photo-card photo-card--tile" data-selected><img src="assets/photos/report-1.png" alt="횡단보도 전경"></div>
+                <div class="photo-card photo-card--tile" data-selected><img src="assets/photos/report-2.png" alt="길 건너 간판"></div>
+                <button class="photo-card photo-card--tile photo-card--add" type="button" aria-label="사진 추가">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="currentColor" d="M20 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 12H4l3.5-4.5 2.5 3 3.5-4.5L20 17Z"/>
                   </svg>
@@ -563,7 +567,7 @@
       </section>
 
       <!-- Shell again: the cancel button sits below whichever view is showing. -->
-      <button class="cancel" type="button" id="cancelButton"
+      <button class="button button--cancel" type="button" id="cancelButton"
               data-for-view="ride-status walk-guide stop-photos">호출 취소</button>
 
     </div>
@@ -576,11 +580,11 @@
   </section>
 
     <div class="action-bar" data-for-view="report-segment">
-      <button class="action" type="button" data-goto="report-photos">사진 추가하기</button>
+      <button class="button button--primary" type="button" data-goto="report-photos">사진 추가하기</button>
     </div>
 
     <div class="action-bar" data-for-view="report-photos">
-      <button class="action" type="button" data-goto="transit"
+      <button class="button button--primary" type="button" data-goto="transit"
               data-resume-view="transit"
               data-notice-title="셔클의 여정에 도움을 주셔서 감사합니다"
               data-notice-body="사진 등록 후 실제 반영까지는 며칠이 소요될 수 있습니다">사진 제보하기</button>
@@ -615,7 +619,7 @@
         <h2 class="stop-alert__title" id="boardingTitle">D1호차에 탑승했어요</h2>
         <p class="stop-alert__lead">뒷골사거리까지 16분<br>오후 2:24~2:35 도착 예정</p>
 
-        <button class="stop-alert__confirm stop-alert__confirm--primary" type="button"
+        <button class="button button--modal button--modal-accent" type="button"
                 data-goto-after-dip="transit" data-close-modal>확인</button>
       </div>
     </div>
@@ -630,7 +634,7 @@
           목적지에 도착했어요.<br>
           셔클을 이용해 주셔서 감사합니다.
         </p>
-        <button class="intro__start" type="button" data-restart>처음부터 다시 보기</button>
+        <button class="button button--invert" type="button" data-restart>처음부터 다시 보기</button>
       </div>
     </div>
 
@@ -644,7 +648,7 @@
           차량 호출과 결제는 기존과 동일합니다.<br>
           프로토타입은 호출 완료 직후부터 시작합니다!
         </p>
-        <button class="intro__start" type="button" data-close-modal>시작하기</button>
+        <button class="button button--invert" type="button" data-close-modal>시작하기</button>
       </div>
     </div>
 
@@ -672,8 +676,8 @@
         <p class="stop-alert__lead">주위 사진과 함께 보는<br>도보 안내로 전환할까요?</p>
 
         <div class="stop-alert__buttons">
-          <button class="stop-alert__confirm" type="button" data-close-modal>나중에</button>
-          <button class="stop-alert__confirm stop-alert__confirm--primary" type="button" data-goto="stop-photos" data-close-modal>전환하기</button>
+          <button class="button button--modal" type="button" data-close-modal>나중에</button>
+          <button class="button button--modal button--modal-accent" type="button" data-goto="stop-photos" data-close-modal>전환하기</button>
         </div>
       </div>
     </div>

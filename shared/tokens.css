@@ -54,6 +54,9 @@
   --text-strong: #000000;            /* [figma] route labels, sheet title */
   --text-body: #121212;              /* [figma] hint sheet body */
   --text-button: #222222;            /* [figma][svg] button label + icon */
+  --text-secondary: #414141;         /* [figma][svg] a label that is not the
+                                        headline — Chip and IconButton both
+                                        use it, so it is global */
   --text-muted: #9a9ba3;             /* disclaimer — antialiased, approximate */
   --text-danger: #ec083c;            /* [figma][svg] 호출 취소 accent */
   /* The same white as the surface, deliberately linked: type on the navy card
@@ -127,6 +130,12 @@
   --icon-md: 24px;                   /* exported icons use a 24x24 artboard */
   --icon-sm: 18px;
 
+  /* ---------- Button height ----------
+     Button's own base height, but global: the shell measures the action bar's
+     footprint against it so the route card can scroll its last rows clear. A
+     figure two files reach for does not belong to either of them. */
+  --button-height: 56px;             /* [figma] 55, snapped */
+
   /* ---------- Layout: device frame ---------- */
   --layout-frame-width: 393px;       /* [figma] */
   --layout-frame-height: 852px;      /* [figma] */
@@ -158,129 +167,7 @@
   --layout-rail-inset: var(--sp-6);  /* [px] rail x=40, card x=16 */
   --layout-rail-gap: var(--sp-6);    /* [px] rail right edge 56 → text x=80 */
   --layout-step-gap: var(--sp-10);   /* measured 38, snapped */
-
-  /* ============================================================
-     Component values below move out to their own stylesheets as each
-     component is modularised. Until then they stay here so the cascade
-     does not change underfoot.
-     ============================================================ */
-
-  /* ---------- Anchor ----------
-     [figma] component set 182:328 — five State variants. Geometry is identical
-     across variants; only the colors and the trail style change. */
-  --anchor-ring-size: 16px;          /* outer circle */
-  --anchor-ring-hole: 6px;           /* inner hole — stays transparent */
-  --anchor-dot-size: 4px;            /* 미사용 — the dot ships inside
-                                        anchor-dot.svg, which carries its own
-                                        radius. Kept as the documented figure. */
-  --anchor-dot-pitch: 12px;          /* Figma spaces the dots 10px apart; snapped
-                                        up rather than down so the trail keeps
-                                        reading as dots and not a dashed line */
-  --anchor-dot-offset: calc(var(--anchor-dot-pitch) / 2); /* first dot one pitch
-                                        below the ring */
-  --anchor-line-width: 4px;          /* 이동중 solid line */
-  --anchor-line-tuck: 3px;           /* line starts at y=13, under the ring */
-  --anchor-overhang: 4px;            /* 이동중 reaches the next node's ring and
-                                        stops. Figma's 14px assumes a fixed 78px
-                                        node pitch; here the anchor box already
-                                        stretches to the row, leaving a 2px gap —
-                                        so 4px bridges it and tucks 2px under the
-                                        ring's 5px border, out of sight. */
-
-  /* ---------- Chip ---------- */
-  --chip-height: 32px;               /* [figma] 31, snapped */
-  --chip-radius: 27px;               /* [figma] */
-  --chip-gap: var(--sp-1);           /* [figma] 5, snapped */
-  --chip-padding-x: var(--sp-4);     /* [figma] 14 — equidistant from 12 and 16,
-                                        took the roomier one */
-  --chip-text: #414141;              /* [figma][svg] — same value as Select's
-                                        prompt, measured separately */
-
-  /* ---------- Notice (OS push banner) ---------- */
-  --notice-delay: 2000ms;            /* beat between the screen settling and the
-                                        push — read from JS, not var() */
-  --notice-hold: 5000ms;             /* matches the OS default for a banner —
-                                        iOS temporary banners and Android
-                                        heads-up notifications both sit for
-                                        about five seconds. Read from JS. */
-  --notice-text: #161615;            /* [figma] */
-  --notice-time-text: #6c6c6c;       /* [figma] */
-
-  /* ---------- Modal ---------- */
-  --modal-backdrop: rgb(0 0 0 / 0.45);
-  --modal-width: min(369px, calc(100% - 24px)); /* [figma] 186:887 — 12px each side */
-  --modal-radius: 24px;              /* [figma] */
-  --modal-bottom: var(--sp-10);      /* measured 38 in the shipped app, rounded
-                                        to the spacing scale */
-
-  /* The opening notice is about the prototype, not inside the product, so it
-     inverts: brand blue ground, white type. */
-  --intro-bg: var(--brand-1);
-  --intro-text: var(--bg-surface);
-
-  /* ---------- Arrival popup ---------- */
-  --stop-alert-card-bg: #f3f3f6;     /* [figma] — same value as Badge 여유's
-                                        ground, measured separately */
-  --stop-alert-desc-text: #656565;   /* [figma] */
-
-  /* ---------- Steps ----------
-     [figma] component used across the walking-guide screens: an Anchor in the
-     left column, a title and a description in the right. The state drives the
-     text color as well as the Anchor. */
-  --steps-min-height: 84px;
-  --steps-fs-title: 18px;
-  --steps-fs-desc: 15px;
-  --steps-title-gap: var(--sp-3);    /* title pb 10 + column gap 2 */
-  --steps-body-width: min(260px, 100%); /* [figma] text column; photos run wider */
-  --steps-action-gap: var(--sp-6);   /* below a step's action, e.g. 크게 보기 */
-
-  --steps-text-passed: #8d8d8d;      /* 지나옴 */
-  --steps-text-current: var(--text-strong); /* 이동중 */
-  --steps-text-upcoming: #7b849c;    /* 이동예정 · 도착예정 · 탑승 */
-
-  /* ---------- Photo card ---------- */
-  --photo-card-width: 160px;         /* [figma] 187:966 */
-  --photo-card-height: 116px;        /* [figma] 117, snapped */
-  --photo-card-gap: var(--sp-1);     /* [figma] */
-  --photo-card-tile-size: 120px;     /* [figma] the picker's square */
-
-  /* ---------- Select ---------- */
-  --select-text: #3b5acb;            /* [figma] picked row's copy */
-  --select-prompt-text: #414141;     /* [figma] */
-  --select-disclaimer-text: #a9a9a9; /* [figma] — same value as 지나옴,
-                                        measured separately */
-  --select-field-border: #e6e6ea;    /* [figma] */
-  --select-placeholder-text: #cccccc; /* [figma] */
-  --gradient-select: linear-gradient(
-    180deg,
-    var(--brand-1),
-    var(--route-boarding)
-  );                                 /* [svg] picked marker ring */
-
-  /* ---------- Button ---------- */
-  --button-primary-bg: #3560ee;      /* [figma] */
-  --button-width: min(344px, calc(100% - 32px)); /* [figma] 343, snapped */
-  --button-height: 56px;             /* [figma] 55, snapped */
-  --button-radius: 17px;             /* [figma] */
-
-  /* ---------- Icon button ---------- */
-  --icon-button-tile-bg: #b9b9b9;    /* [figma] 사진 추가 tile */
-
-  /* ---------- Badge ----------
-     [figma] component set 182:784 — three State variants. One shape, three
-     color pairs; the three tinted greys are the same channels permuted. */
-  --badge-radius: 14px;
-  --badge-padding: var(--sp-2) var(--sp-3);         /* [figma] 7, snapped — makes the badge 32px
-                                        tall, matching the chip */
-  --badge-gap: var(--sp-1);
-  --badge-icon-width: 9px;
-  --badge-icon-height: 16px;
-
-  --badge-easy-bg: #f3f3f6;
-  --badge-easy-text: var(--brand-1);
-  --badge-busy-bg: #f6f5f3;
-  --badge-busy-text: #c59129;
-  --badge-late-bg: #f6f3f3;
-  --badge-late-text: #b14141;        /* the 늦음 icon ships as #b04141 — one step
-                                        off its own label; treated as the same */
+  --layout-body-width: min(260px, 100%); /* [figma] the text column. Steps,
+                                        Select and PhotoCard all measure
+                                        against it, so it is global */
 }

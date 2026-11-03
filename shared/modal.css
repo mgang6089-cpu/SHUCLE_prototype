@@ -7,9 +7,28 @@
      </div>
 
    Opened with data-open-modal="<id>", closed with data-close-modal or Esc.
+
+   Two variants fill the sheet: .stop-alert, the arrival popup, and .intro,
+   the note about the prototype itself. Their buttons are Buttons
+   (--modal, --modal-accent, --invert), so only the content is here.
    ============================================================ */
 
 .modal {
+  --modal-backdrop: rgb(0 0 0 / 0.45);
+  --modal-width: min(369px, calc(100% - 24px)); /* [figma] 186:887 — 12px each side */
+  --modal-radius: 24px;              /* [figma] */
+  --modal-bottom: var(--sp-10);      /* measured 38 in the shipped app, rounded
+                                        to the spacing scale */
+
+  --stop-alert-card-bg: #f3f3f6;     /* [figma] — same value as Badge 여유's
+                                        ground, measured separately */
+  --stop-alert-desc-text: #656565;   /* [figma] */
+
+  /* The opening notice is about the prototype, not inside the product, so it
+     inverts: brand blue ground, white type. */
+  --intro-bg: var(--brand-1);
+  --intro-text: var(--bg-surface);
+
   position: absolute;
   inset: 0;
   z-index: 10;
@@ -57,3 +76,129 @@
     animation: none;
   }
 }
+
+/* ---------- Arrival popup ----------
+   Figma 186:887. Laid out in flow rather than by the design's absolute
+   offsets; the gaps below reproduce them. */
+
+.stop-alert {
+  padding: 60px var(--sp-8) var(--sp-7);
+  text-align: center;
+}
+
+.stop-alert__pin {
+  margin: 0 auto;
+}
+
+/* Stands in for the pin when the popup is about the vehicle, not a stop. */
+.stop-alert__badge {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: var(--brand-1);
+  color: var(--bg-surface);
+}
+
+.stop-alert__badge .icon {
+  --icon-md: 32px;
+}
+
+.stop-alert__title {
+  margin: 14px 0 0;
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+}
+
+.stop-alert__card {
+  margin-top: var(--sp-7);
+  padding: var(--sp-7) var(--sp-4) var(--sp-6);
+  border-radius: var(--radius-card);
+  background: var(--stop-alert-card-bg);
+}
+
+.stop-alert__code {
+  margin: 0;
+  font-size: 22px;
+  font-weight: var(--fw-bold);
+  color: var(--brand-1);
+}
+
+.stop-alert__desc {
+  margin: var(--sp-3) 0 0;
+  font-size: 15px;
+  line-height: 1.33;
+  color: var(--stop-alert-desc-text);
+}
+
+.stop-alert__desc strong {
+  font-weight: var(--fw-semibold);
+  color: var(--brand-1);
+}
+
+.stop-alert__actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--sp-1);
+  margin-top: 25px;
+}
+
+/* Short variant: a question instead of stop details, so no info card. */
+.stop-alert--compact {
+  padding-top: var(--sp-10);
+}
+
+.stop-alert__lead {
+  margin: var(--sp-3) 0 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--stop-alert-desc-text);
+}
+
+.stop-alert__buttons {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.stop-alert__buttons .button--modal {
+  flex: 1;
+  margin-top: var(--sp-7);
+}
+
+/* ---------- Opening notice ----------
+   Not an in-product popup but a note about the prototype itself, so it borrows
+   the modal's shape and type scale and inverts the color: brand blue ground,
+   white type, the app mark on top. */
+
+.intro {
+  padding: var(--sp-10) var(--sp-8) var(--sp-7);
+  background: var(--intro-bg);
+  color: var(--intro-text);
+  text-align: center;
+}
+
+.intro__logo {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  object-fit: cover;
+}
+
+.intro__title {
+  margin: var(--sp-5) 0 0;
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+}
+
+.intro__lead {
+  margin: var(--sp-3) 0 0;
+  font-size: 16px;
+  line-height: 1.45;
+}
+

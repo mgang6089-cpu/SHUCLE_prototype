@@ -1,0 +1,68 @@
+/* ============================================================
+   Ride — the called vehicle, and the ticket for it
+
+   Markup:
+     <section class="ride" aria-label="차량 정보">
+       <div class="ride__row">
+         <span class="icon icon--car ride__icon"></span>
+         <span class="ride__label">D1호차</span>
+         <span class="ride__ticket">…</span>
+       </div>
+       <div class="ride__row">…</div>
+     </section>
+
+   One navy card, two rows: which vehicle is coming, and which seat. The
+   ticket is a pill on the first row rather than a card of its own — in the
+   shipped app they are the same object, which is why 탑승권 영역 and
+   호출 차량 카드 are one component here.
+
+   Where it sits — pinned under the header, bleeding to the drawer's edges —
+   belongs to the shell, not the card, and stays in app.css.
+   ============================================================ */
+
+.ride {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  margin-top: 14px;
+  padding: 22px var(--sp-6);
+  border-radius: var(--radius-card);
+  background: var(--bg-navy);
+  color: var(--text-inverse);
+}
+
+.ride__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ride__icon {
+  flex: none;
+  width: var(--icon-md);
+  height: var(--icon-md);
+}
+
+.ride__label {
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-bold);
+}
+
+/* Reads as a ticket stub: the same navy, lifted a touch by a white wash. */
+.ride__ticket {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 7px var(--sp-3);
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.16);
+  font-size: var(--fs-badge);
+  font-weight: var(--fw-semibold);
+}
+
+.ride__chevron {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  color: rgb(255 255 255 / 0.7);
+}

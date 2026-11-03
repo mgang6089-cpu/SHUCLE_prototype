@@ -11,6 +11,12 @@
    ============================================================ */
 
 .chip {
+  --chip-height: 32px;               /* [figma] 31, snapped */
+  --chip-radius: 27px;               /* [figma] */
+  --chip-gap: var(--sp-1);           /* [figma] 5, snapped */
+  --chip-padding-x: var(--sp-4);     /* [figma] 14 — equidistant from 12 and 16,
+                                        took the roomier one */
+
   display: inline-flex;
   align-items: center;
   gap: var(--chip-gap);
@@ -21,7 +27,7 @@
   background: var(--bg-surface);
   font-size: var(--fs-button);
   font-weight: var(--fw-medium);
-  color: var(--chip-text);
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -55,4 +61,97 @@
   height: 14px;
   -webkit-mask-image: url("assets/icons/photo-flag.svg");
   mask-image: url("assets/icons/photo-flag.svg");
+}
+
+/* The report entry point sits where the status badge normally does. */
+.chip--brand {
+  border-color: var(--brand-1);
+  color: var(--brand-1);
+}
+/* Gradient border: the fill is painted into the padding box and the gradient
+   into the border box, so the 1px edge shows the gradient through. */
+.chip--walk {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--chip-height);
+  padding: 0 var(--chip-padding-x);
+  border: 1px solid transparent;
+  border-radius: var(--chip-radius);
+  background:
+    linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
+    var(--gradient-brand) border-box;
+  font-size: var(--fs-button);
+  font-weight: var(--fw-medium);
+  color: var(--text-button);
+  white-space: nowrap;
+
+}
+/* ---------- Call to action ----------
+   The one control the viewer is meant to press on a given screen: a highlight
+   travels its border like a reflection while the glow beneath breathes in
+   step. Worn by 도보 안내 시작하기 and 사진 제보. */
+
+.chip--walk,
+.chip--brand {
+  position: relative;
+  animation: cta-glow 3200ms ease-in-out infinite;
+}
+
+/* Sits over the border and is masked down to the 1px ring, so only the edge
+   catches the light. */
+.chip--walk::after,
+.chip--brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--cta-sweep),
+    transparent 0turn 0.6turn,
+    rgb(255 255 255 / 0.95) 0.75turn,
+    transparent 0.9turn 1turn
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: cta-sweep 3200ms linear infinite;
+}
+
+@property --cta-sweep {
+  syntax: "<angle>";
+  initial-value: 0turn;
+  inherits: false;
+}
+
+@keyframes cta-sweep {
+  to {
+    --cta-sweep: 1turn;
+  }
+}
+
+@keyframes cta-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgb(36 98 247 / 0);
+  }
+  50% {
+    box-shadow: 0 2px 14px rgb(36 98 247 / 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip--walk,
+  .chip--walk::after,
+  .chip--brand,
+  .chip--brand::after {
+    animation: none;
+  }
 }

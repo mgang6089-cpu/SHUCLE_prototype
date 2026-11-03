@@ -80,32 +80,30 @@
   pointer-events: none;
 }
 
-.map__button {
-  z-index: 1;
-}
-
-.map__button {
+/* The map crop still carries the app's own home button and 상담 chip. These two
+   are sized and placed to sit exactly on top of them (measured: both at top
+   72.7, home 40x40 at left 14, chip 73.7x36 at right 13) with ~1px to spare, so
+   the baked pair is hidden behind the live one. They exist to cover a
+   screenshot, which is why they stay with the map rather than becoming
+   components of their own. */
+.map__control,
+.map__consult {
   position: absolute;
+  z-index: 1;
   background: var(--bg-surface);
   box-shadow: var(--shadow-float);
   color: var(--text-button);
 }
 
-/* The map crop still carries the app's own home button and 상담 chip. These are
-   sized and placed to sit exactly on top of them (measured: both at top 72.7,
-   home 40x40 at left 14, chip 73.7x36 at right 13) with ~1px to spare, so the
-   baked pair is hidden behind the live one. */
-.map__button--home {
+.map__control {
   left: 13px;
   top: 71.5px;
-  display: grid;
-  place-items: center;
   width: 42px;
   height: 42px;
   border-radius: 50%;
 }
 
-.map__button--consult {
+.map__consult {
   right: 12px;
   top: 71.5px;
   min-width: 76px;
@@ -247,11 +245,6 @@
   margin-left: auto;
 }
 
-/* The report entry point sits where the status badge normally does. */
-.chip--brand {
-  border-color: var(--brand-1);
-  color: var(--brand-1);
-}
 
 /* ---------- Ride info card ---------- */
 
@@ -265,52 +258,6 @@
   margin: 0 calc(var(--layout-gutter) * -1);
   padding: 0 var(--layout-gutter) 10px;
   background: var(--bg-surface);
-}
-
-.ride {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-5);
-  margin-top: 14px;
-  padding: 22px var(--sp-6);
-  border-radius: var(--radius-card);
-  background: var(--bg-navy);
-  color: var(--text-inverse);
-}
-
-.ride__row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ride__icon {
-  flex: none;
-  width: var(--icon-md);
-  height: var(--icon-md);
-}
-
-.ride__label {
-  font-size: var(--fs-card-title);
-  font-weight: var(--fw-bold);
-}
-
-.ride__ticket {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  padding: 7px var(--sp-3);
-  border-radius: 14px;
-  background: rgb(255 255 255 / 0.16);
-  font-size: var(--fs-badge);
-  font-weight: var(--fw-semibold);
-}
-
-.ride__chevron {
-  width: 18px;
-  height: 18px;
-  color: rgb(255 255 255 / 0.7);
 }
 
 /* ---------- Route timeline ---------- */
@@ -383,96 +330,9 @@
   line-height: 18px;
 }
 
-/* Gradient border: the fill is painted into the padding box and the gradient
-   into the border box, so the 1px edge shows the gradient through. */
-.walk-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: var(--chip-height);
-  padding: 0 var(--chip-padding-x);
-  border: 1px solid transparent;
-  border-radius: var(--chip-radius);
-  background:
-    linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
-    var(--gradient-brand) border-box;
-  font-size: var(--fs-button);
-  font-weight: var(--fw-medium);
-  color: var(--text-button);
-  white-space: nowrap;
 
-}
 
-/* ---------- Call to action ----------
-   The one control the viewer is meant to press on a given screen: a highlight
-   travels its border like a reflection while the glow beneath breathes in
-   step. Worn by 도보 안내 시작하기 and 사진 제보. */
-
-.walk-button,
-.chip--brand {
-  position: relative;
-  animation: cta-glow 3200ms ease-in-out infinite;
-}
-
-/* Sits over the border and is masked down to the 1px ring, so only the edge
-   catches the light. */
-.walk-button::after,
-.chip--brand::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: conic-gradient(
-    from var(--cta-sweep),
-    transparent 0turn 0.6turn,
-    rgb(255 255 255 / 0.95) 0.75turn,
-    transparent 0.9turn 1turn
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  animation: cta-sweep 3200ms linear infinite;
-}
-
-@property --cta-sweep {
-  syntax: "<angle>";
-  initial-value: 0turn;
-  inherits: false;
-}
-
-@keyframes cta-sweep {
-  to {
-    --cta-sweep: 1turn;
-  }
-}
-
-@keyframes cta-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 rgb(36 98 247 / 0);
-  }
-  50% {
-    box-shadow: 0 2px 14px rgb(36 98 247 / 0.35);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .walk-button,
-  .walk-button::after,
-  .chip--brand,
-  .chip--brand::after {
-    animation: none;
-  }
-}
-
-.route-step__body .walk-button,
+.route-step__body .chip--walk,
 .route-step__body .chip {
   margin-top: var(--sp-2);
 }
@@ -486,172 +346,7 @@
   color: var(--text-muted);
 }
 
-/* ---------- Cancel ---------- */
 
-.cancel {
-  width: 100%;
-  height: 52px;
-  margin-top: var(--sp-4);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  background: var(--bg-surface);
-  color: var(--text-danger);
-  font-size: 16px;
-  font-weight: var(--fw-semibold);
-}
-
-/* ---------- Arrival popup ----------
-   Figma 186:887. Laid out in flow rather than by the design's absolute
-   offsets; the gaps below reproduce them. */
-
-.stop-alert {
-  padding: 60px var(--sp-8) var(--sp-7);
-  text-align: center;
-}
-
-.stop-alert__pin {
-  margin: 0 auto;
-}
-
-/* Stands in for the pin when the popup is about the vehicle, not a stop. */
-.stop-alert__badge {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  margin: 0 auto;
-  border-radius: 50%;
-  background: var(--brand-1);
-  color: var(--bg-surface);
-}
-
-.stop-alert__badge .icon {
-  --icon-md: 32px;
-}
-
-.stop-alert__title {
-  margin: 14px 0 0;
-  font-size: 17px;
-  font-weight: var(--fw-bold);
-  line-height: 1.2;
-}
-
-.stop-alert__card {
-  margin-top: var(--sp-7);
-  padding: var(--sp-7) var(--sp-4) var(--sp-6);
-  border-radius: var(--radius-card);
-  background: var(--stop-alert-card-bg);
-}
-
-.stop-alert__code {
-  margin: 0;
-  font-size: 22px;
-  font-weight: var(--fw-bold);
-  color: var(--brand-1);
-}
-
-.stop-alert__desc {
-  margin: var(--sp-3) 0 0;
-  font-size: 15px;
-  line-height: 1.33;
-  color: var(--stop-alert-desc-text);
-}
-
-.stop-alert__desc strong {
-  font-weight: var(--fw-semibold);
-  color: var(--brand-1);
-}
-
-.stop-alert__actions {
-  display: flex;
-  justify-content: center;
-  gap: var(--chip-gap);
-  margin-top: 25px;
-}
-
-.stop-alert__confirm {
-  width: 100%;
-  height: 55px;
-  margin-top: var(--sp-6);
-  border: 1px solid var(--border-subtle);
-  border-radius: 17px;
-  background: var(--bg-surface);
-  font-size: 18px;
-  font-weight: var(--fw-regular);
-}
-
-/* Short variant: a question instead of stop details, so no info card. */
-.stop-alert--compact {
-  padding-top: var(--sp-10);
-}
-
-.stop-alert__lead {
-  margin: var(--sp-3) 0 0;
-  font-size: 16px;
-  line-height: 1.45;
-  color: var(--stop-alert-desc-text);
-}
-
-.stop-alert__buttons {
-  display: flex;
-  gap: var(--sp-2);
-}
-
-.stop-alert__buttons .stop-alert__confirm {
-  flex: 1;
-  margin-top: var(--sp-7);
-}
-
-.stop-alert__confirm--primary {
-  border-color: var(--brand-1);
-  color: var(--brand-1);
-  font-weight: var(--fw-semibold);
-}
-
-/* ---------- Opening notice ----------
-   Not an in-product popup but a note about the prototype itself, so it borrows
-   the modal's shape and type scale and inverts the color: brand blue ground,
-   white type, the app mark on top. */
-
-.intro {
-  padding: var(--sp-10) var(--sp-8) var(--sp-7);
-  background: var(--intro-bg);
-  color: var(--intro-text);
-  text-align: center;
-}
-
-.intro__logo {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto;
-  border-radius: var(--radius-card);
-  background: var(--bg-surface);
-  object-fit: cover;
-}
-
-.intro__title {
-  margin: var(--sp-5) 0 0;
-  font-size: 17px;
-  font-weight: var(--fw-bold);
-  line-height: 1.2;
-}
-
-.intro__lead {
-  margin: var(--sp-3) 0 0;
-  font-size: 16px;
-  line-height: 1.45;
-}
-
-.intro__start {
-  width: 100%;
-  height: 55px;
-  margin-top: var(--sp-7);
-  border-radius: 17px;
-  background: var(--bg-surface);
-  color: var(--brand-1);
-  font-size: 18px;
-  font-weight: var(--fw-semibold);
-}
 
 /* ---------- Primary action bar ----------
    A full-width button pinned over the drawer while a task is in progress. The
@@ -676,17 +371,6 @@
     var(--bg-muted) 35%
   );
   pointer-events: none;
-}
-
-.action {
-  width: var(--button-width);
-  height: var(--button-height);
-  border-radius: var(--button-radius);
-  background: var(--button-primary-bg);
-  color: var(--bg-surface);
-  font-size: 18px;
-  font-weight: var(--fw-medium);
-  pointer-events: auto;
 }
 
 /* ---------- Floating hint ---------- */
