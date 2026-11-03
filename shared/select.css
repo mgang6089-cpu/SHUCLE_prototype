@@ -18,7 +18,7 @@
 }
 
 .select[data-selected] {
-  --steps-fg: var(--select-fg);
+  --steps-fg: var(--select-text);
 }
 
 .select[data-selected] .steps__photo {
@@ -51,15 +51,15 @@
 /* A row being reported drops its own description for the picker's prompt. */
 .select__prompt {
   margin: var(--steps-title-gap) 0 0;
-  font-size: var(--steps-desc-size);
-  color: var(--select-prompt-fg);
+  font-size: var(--steps-fs-desc);
+  color: var(--select-prompt-text);
 }
 
 /* Photo picker: 120px tiles, the chosen ones ringed in brand blue. */
 .select__tiles {
   display: flex;
-  gap: var(--steps-photo-gap);
-  margin-top: 16px;
+  gap: var(--photo-card-gap);
+  margin-top: var(--sp-4);
   overflow-x: auto;
   scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
@@ -67,11 +67,11 @@
 
 .select__tile {
   flex: none;
-  width: var(--select-tile-size);
-  height: var(--select-tile-size);
-  border-radius: var(--card-radius);
+  width: var(--photo-card-tile-size);
+  height: var(--photo-card-tile-size);
+  border-radius: var(--radius-card);
   overflow: hidden;
-  background: var(--color-surface);
+  background: var(--bg-surface);
   scroll-snap-align: start;
 }
 
@@ -82,14 +82,14 @@
 }
 
 .select__tile[data-selected] {
-  border: 2px solid var(--color-brand-1);
+  border: 2px solid var(--brand-1);
 }
 
 .select__tile--add {
   display: grid;
   place-items: center;
-  background: var(--select-tile-add-bg);
-  color: var(--color-surface);
+  background: var(--icon-button-tile-bg);
+  color: var(--bg-surface);
 }
 
 .select__tile--add svg {
@@ -99,26 +99,26 @@
 
 .select__label {
   margin: var(--steps-action-gap) 0 0;
-  font-size: var(--steps-desc-size);
-  color: var(--select-prompt-fg);
+  font-size: var(--steps-fs-desc);
+  color: var(--select-prompt-text);
 }
 
 .select__note {
   width: 100%;
   height: 120px;
-  margin-top: 8px;
-  padding: 16px 18px;
+  margin-top: var(--sp-2);
+  padding: var(--sp-4) 18px;
   border: 1px solid var(--select-field-border);
-  border-radius: var(--card-radius);
-  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
   font: inherit;
-  font-size: var(--steps-desc-size);
+  font-size: var(--steps-fs-desc);
   line-height: 1.5;
   resize: none;
 }
 
 .select__note::placeholder {
-  color: var(--select-placeholder-fg);
+  color: var(--select-placeholder-text);
 }
 
 .select__close {
@@ -129,10 +129,10 @@
   place-items: center;
   width: 30px;
   height: 30px;
-  border: 1px solid var(--color-border-subtle);
+  border: 1px solid var(--border-subtle);
   border-radius: 50%;
-  background: var(--color-surface);
-  color: var(--chip-fg);
+  background: var(--bg-surface);
+  color: var(--chip-text);
 }
 
 .select__close svg {
@@ -142,8 +142,8 @@
 
 .select__disclaimer {
   margin: var(--steps-action-gap) 0 0;
-  font-size: var(--steps-desc-size);
+  font-size: var(--steps-fs-desc);
   line-height: 1.5;
   text-align: center;
-  color: var(--select-disclaimer-fg);
+  color: var(--select-disclaimer-text);
 }

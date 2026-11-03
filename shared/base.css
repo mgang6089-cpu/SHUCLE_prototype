@@ -14,7 +14,7 @@ body {
 
 body {
   font-family: var(--font-family);
-  color: var(--color-text-strong);
+  color: var(--text-strong);
   -webkit-font-smoothing: antialiased;
   background: #e5e5ea;
 }
@@ -55,12 +55,12 @@ svg {
 /* Phone frame used to preview a screen at its design size. */
 .device {
   position: relative;
-  width: var(--frame-width);
-  height: var(--frame-height);
-  margin: 24px auto;
+  width: var(--layout-frame-width);
+  height: var(--layout-frame-height);
+  margin: var(--sp-6) auto;
   overflow: hidden;
   border-radius: 32px;
-  background: var(--color-surface);
+  background: var(--bg-surface);
   box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
 }
 

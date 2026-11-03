@@ -20,22 +20,22 @@
    ============================================================ */
 
 .steps {
-  --steps-fg: var(--steps-fg-upcoming);
+  --steps-fg: var(--steps-text-upcoming);
 
   display: grid;
-  grid-template-columns: var(--anchor-width) 1fr;
-  column-gap: var(--rail-gap);
+  grid-template-columns: var(--layout-rail-width) 1fr;
+  column-gap: var(--layout-rail-gap);
   min-height: var(--steps-min-height);
   color: var(--steps-fg);
-  transition: color var(--route-state-transition) ease;
+  transition: color var(--dur-state) ease;
 }
 
 .steps[data-state="지나옴"] {
-  --steps-fg: var(--steps-fg-passed);
+  --steps-fg: var(--steps-text-passed);
 }
 
 .steps[data-state="이동중"] {
-  --steps-fg: var(--steps-fg-current);
+  --steps-fg: var(--steps-text-current);
 }
 
 .steps--tappable {
@@ -68,23 +68,23 @@
 
 .steps__title {
   margin: 0;
-  font-size: var(--steps-title-size);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--steps-fs-title);
+  font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 
 .steps__desc {
   margin: var(--steps-title-gap) 0 0;
-  font-size: var(--steps-desc-size);
-  font-weight: var(--font-weight-regular);
+  font-size: var(--steps-fs-desc);
+  font-weight: var(--fw-regular);
   line-height: 1.4;
 }
 
 /* A place name followed by a lighter direction, e.g. 아방리입구 온신초등학교 방면 */
 .steps__title small {
-  margin-left: 8px;
+  margin-left: var(--sp-2);
   font-size: 14px;
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--fw-regular);
 }
 
 /* Photo-led guidance: shots of the spot, shown under the instruction. More than
@@ -92,8 +92,8 @@
    shot sits half-shown, which is what invites the swipe. */
 .steps__photos {
   display: flex;
-  gap: var(--steps-photo-gap);
-  margin-top: 12px;
+  gap: var(--photo-card-gap);
+  margin-top: var(--sp-3);
   overflow-x: auto;
   scroll-snap-type: x proximity;
   overscroll-behavior-x: contain;
@@ -101,11 +101,11 @@
 
 .steps__photo {
   flex: none;
-  width: var(--steps-photo-width);
-  height: var(--steps-photo-height);
-  border-radius: var(--card-radius);
+  width: var(--photo-card-width);
+  height: var(--photo-card-height);
+  border-radius: var(--radius-card);
   overflow: hidden;
-  background: var(--color-surface);
+  background: var(--bg-surface);
   scroll-snap-align: start;
 }
 
@@ -128,7 +128,7 @@
 }
 
 .steps__photos + .chip {
-  margin-top: 8px;
+  margin-top: var(--sp-2);
   margin-bottom: var(--steps-action-gap);
 }
 

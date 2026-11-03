@@ -8,8 +8,8 @@
   const readToken = (name) =>
     parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
 
-  const REST = readToken('--sheet-top-rest');
-  const RAISED = readToken('--sheet-top-raised');
+  const REST = readToken('--layout-sheet-rest');
+  const RAISED = readToken('--layout-sheet-raised');
 
   let dragStartY = 0;
   let dragStartTop = REST;
@@ -78,7 +78,7 @@
     if (!trigger) return;
 
     const style = getComputedStyle(document.documentElement);
-    const dip = parseFloat(style.getPropertyValue('--sheet-dip-duration')) || 760;
+    const dip = parseFloat(style.getPropertyValue('--dur-sheet-dip')) || 760;
 
     sheet.classList.remove('is-dipping');
     void sheet.offsetWidth; // let the animation restart if it is already playing

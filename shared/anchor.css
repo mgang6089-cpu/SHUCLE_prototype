@@ -19,45 +19,45 @@
    ============================================================ */
 
 .anchor {
-  --anchor-ring-color: var(--anchor-passed);
-  --anchor-trail-color: var(--anchor-passed);
+  --anchor-ring-color: var(--route-passed);
+  --anchor-trail-color: var(--route-passed);
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: var(--anchor-width);
+  width: var(--layout-rail-width);
   height: 100%;
 }
 
 .anchor[data-state="탑승"] {
-  --anchor-ring-color: var(--anchor-boarding);
-  --anchor-trail-color: var(--anchor-boarding-trail);
+  --anchor-ring-color: var(--route-boarding);
+  --anchor-trail-color: var(--route-boarding-trail);
 }
 
 .anchor[data-state="이동예정"] {
-  --anchor-ring-color: var(--anchor-pending);
-  --anchor-trail-color: var(--anchor-pending);
+  --anchor-ring-color: var(--route-pending);
+  --anchor-trail-color: var(--route-pending);
 }
 
 .anchor[data-state="도착예정"] {
-  --anchor-ring-color: var(--anchor-active);
-  --anchor-trail-color: var(--anchor-pending);
+  --anchor-ring-color: var(--route-active);
+  --anchor-trail-color: var(--route-pending);
 }
 
 .anchor[data-state="이동중"] {
-  --anchor-ring-color: var(--anchor-active);
-  --anchor-trail-color: var(--anchor-active);
+  --anchor-ring-color: var(--route-active);
+  --anchor-trail-color: var(--route-active);
 }
 
 .anchor[data-state="지나옴"] {
-  --anchor-ring-color: var(--anchor-passed);
-  --anchor-trail-color: var(--anchor-passed);
+  --anchor-ring-color: var(--route-passed);
+  --anchor-trail-color: var(--route-passed);
 }
 
 /* Final node of a route. No Figma variant exists for it yet. */
 .anchor[data-state="도착"] {
-  --anchor-ring-color: var(--anchor-terminal);
-  --anchor-trail-color: var(--anchor-terminal);
+  --anchor-ring-color: var(--route-terminal);
+  --anchor-trail-color: var(--route-terminal);
 }
 
 .anchor__ring {
@@ -69,7 +69,7 @@
   border: calc((var(--anchor-ring-size) - var(--anchor-ring-hole)) / 2) solid
     var(--anchor-ring-color);
   border-radius: 50%;
-  transition: border-color var(--route-state-transition) ease;
+  transition: border-color var(--dur-state) ease;
 }
 
 .anchor__trail {
@@ -79,13 +79,13 @@
   background-color: var(--anchor-trail-color);
   -webkit-mask-image: url("assets/anchor-dot.svg");
   mask-image: url("assets/anchor-dot.svg");
-  -webkit-mask-size: var(--anchor-width) var(--anchor-dot-pitch);
-  mask-size: var(--anchor-width) var(--anchor-dot-pitch);
+  -webkit-mask-size: var(--layout-rail-width) var(--anchor-dot-pitch);
+  mask-size: var(--layout-rail-width) var(--anchor-dot-pitch);
   -webkit-mask-position: center var(--anchor-dot-offset);
   mask-position: center var(--anchor-dot-offset);
   -webkit-mask-repeat: repeat-y;
   mask-repeat: repeat-y;
-  transition: background-color var(--route-state-transition) ease;
+  transition: background-color var(--dur-state) ease;
 }
 
 /* 이동중 is the leg being travelled right now. Its trail is one solid line
@@ -100,8 +100,8 @@
   mask-image: none;
   background: linear-gradient(
     180deg,
-    var(--anchor-active),
-    var(--anchor-trail-end, var(--anchor-active))
+    var(--route-active),
+    var(--anchor-trail-end, var(--route-active))
   );
 }
 
@@ -132,7 +132,7 @@
   border: 2px solid var(--anchor-ring-color);
   border-radius: 50%;
   pointer-events: none;
-  animation: anchor-pulse var(--route-step-duration) ease-out infinite;
+  animation: anchor-pulse var(--dur-route-step) ease-out infinite;
 }
 
 @keyframes anchor-arrive {
@@ -196,13 +196,13 @@
    stop is where the two overlap: brand blue hands over to the stop's navy
    rather than stopping dead against it. */
 .anchor[data-leads-to="탑승"] {
-  --anchor-trail-end: var(--anchor-boarding-trail);
+  --anchor-trail-end: var(--route-boarding-trail);
 }
 
 .anchor[data-leads-to="도착"] {
-  --anchor-trail-end: var(--anchor-terminal);
+  --anchor-trail-end: var(--route-terminal);
 }
 
 .anchor[data-leads-to="지나옴"] {
-  --anchor-trail-end: var(--anchor-passed);
+  --anchor-trail-end: var(--route-passed);
 }

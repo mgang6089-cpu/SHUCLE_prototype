@@ -26,7 +26,7 @@
   const duration = () =>
     parseFloat(
       getComputedStyle(document.documentElement).getPropertyValue(
-        '--route-step-duration'
+        '--dur-route-step'
       )
     ) || 3000;
 

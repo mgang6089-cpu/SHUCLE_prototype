@@ -31,7 +31,7 @@
   background: rgb(255 255 255 / 0.1);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
-  color: var(--notice-fg);
+  color: var(--notice-text);
   transition:
     opacity 240ms ease,
     transform 240ms ease;
@@ -55,7 +55,7 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: var(--color-surface);
+  background: var(--bg-surface);
   object-fit: cover;
 }
 
@@ -67,19 +67,19 @@
 .notice__title {
   margin: 0;
   font-size: 16px;
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--fw-semibold);
   line-height: 1.2;
 }
 
 .notice__body {
-  margin: 4px 0 0;
+  margin: var(--sp-1) 0 0;
   font-size: 14px;
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--fw-regular);
   line-height: 1.2;
 }
 
 .notice__time {
   flex: none;
   font-size: 14px;
-  color: var(--notice-time-fg);
+  color: var(--notice-time-text);
 }

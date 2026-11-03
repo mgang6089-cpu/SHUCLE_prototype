@@ -16,8 +16,8 @@
 .icon {
   display: inline-block;
   flex: none;
-  width: var(--icon-size);
-  height: var(--icon-size);
+  width: var(--icon-md);
+  height: var(--icon-md);
   background-color: currentColor;
   -webkit-mask-position: center;
   mask-position: center;
@@ -43,7 +43,7 @@
 }
 
 .icon--ticket {
-  --icon-size: var(--icon-size-sm);
+  --icon-md: var(--icon-sm);
   -webkit-mask-image: url("shared/assets/icons/ticket.svg");
   mask-image: url("shared/assets/icons/ticket.svg");
 }
@@ -55,14 +55,14 @@
 .map {
   position: absolute;
   inset: 0 0 auto;
-  height: calc(var(--sheet-top-rest) + var(--sheet-dip-distance));
+  height: calc(var(--layout-sheet-rest) + var(--layout-sheet-dip));
   overflow: hidden;
-  background: var(--map-edge);
+  background: var(--bg-map-edge);
 }
 
 .map__image {
   width: 100%;
-  height: var(--sheet-top-rest);
+  height: var(--layout-sheet-rest);
   object-fit: cover;
   object-position: center top;
 }
@@ -74,9 +74,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(var(--sheet-top-rest) - 48px);
+  top: calc(var(--layout-sheet-rest) - 48px);
   height: 48px;
-  background: linear-gradient(to bottom, rgb(242 242 239 / 0), var(--map-edge));
+  background: linear-gradient(to bottom, rgb(242 242 239 / 0), var(--bg-map-edge));
   pointer-events: none;
 }
 
@@ -86,9 +86,9 @@
 
 .map__button {
   position: absolute;
-  background: var(--color-surface);
+  background: var(--bg-surface);
   box-shadow: var(--shadow-float);
-  color: var(--color-text-button);
+  color: var(--text-button);
 }
 
 /* The map crop still carries the app's own home button and 상담 chip. These are
@@ -110,24 +110,24 @@
   top: 71.5px;
   min-width: 76px;
   height: 38px;
-  padding: 0 16px;
+  padding: 0 var(--sp-4);
   border-radius: 19px;
   font-size: 14px;
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--fw-semibold);
 }
 
 /* ---------- Sheet ---------- */
 
 .sheet {
   position: absolute;
-  top: var(--sheet-top-rest);
+  top: var(--layout-sheet-rest);
   right: 0;
   bottom: 0;
   left: 0;
   display: flex;
   flex-direction: column;
-  background: var(--color-surface);
-  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
   box-shadow: var(--shadow-sheet);
 }
 
@@ -143,13 +143,13 @@
 
 /* Held just below its resting place until the opening notice is dismissed. */
 .sheet.is-entering {
-  transform: translateY(var(--sheet-entrance));
+  transform: translateY(var(--layout-sheet-entrance));
 }
 
 /* Boarding is the biggest break in the journey, so the drawer drops away and
    comes back carrying the next chapter instead of cross-fading in place. */
 .sheet.is-dipping {
-  animation: sheet-dip var(--sheet-dip-duration) cubic-bezier(0.33, 0, 0.2, 1);
+  animation: sheet-dip var(--dur-sheet-dip) cubic-bezier(0.33, 0, 0.2, 1);
 }
 
 @keyframes sheet-dip {
@@ -158,7 +158,7 @@
     transform: translateY(0);
   }
   45% {
-    transform: translateY(var(--sheet-dip-distance));
+    transform: translateY(var(--layout-sheet-dip));
   }
 }
 
@@ -172,7 +172,7 @@
   flex: none;
   display: grid;
   place-items: center;
-  padding: var(--handle-offset) 0 8px;
+  padding: var(--layout-handle-offset) 0 var(--sp-2);
   cursor: grab;
   touch-action: none;
 }
@@ -182,10 +182,10 @@
 }
 
 .sheet__handle {
-  width: var(--handle-width);
-  height: var(--handle-height);
-  border-radius: calc(var(--handle-height) / 2);
-  background: var(--color-handle);
+  width: var(--layout-handle-width);
+  height: var(--layout-handle-height);
+  border-radius: calc(var(--layout-handle-height) / 2);
+  background: var(--bg-handle);
 }
 
 .sheet__scroll {
@@ -194,7 +194,7 @@
   /* Views swap inside this one scroller; without this the browser tries to keep
      whatever was on screen anchored and undoes the reset to the top. */
   overflow-anchor: none;
-  padding: 0 var(--gutter) calc(120px + env(safe-area-inset-bottom));
+  padding: 0 var(--layout-gutter) calc(var(--layout-scroll-clearance) + env(safe-area-inset-bottom));
   overscroll-behavior: contain;
 }
 
@@ -207,9 +207,9 @@
   top: 0;
   z-index: 2;
   /* Bleeds past the drawer's gutters so nothing shows through at the sides. */
-  margin: 0 calc(var(--gutter) * -1);
-  padding: 21px var(--gutter) 12px;
-  background: var(--color-surface);
+  margin: 0 calc(var(--layout-gutter) * -1);
+  padding: 21px var(--layout-gutter) var(--sp-3);
+  background: var(--bg-surface);
 }
 
 .head {
@@ -224,21 +224,21 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-brand-1);
+  background: var(--brand-1);
 }
 
 .head__title {
   margin: 0;
-  font-size: var(--font-size-title);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--fs-title);
+  font-weight: var(--fw-bold);
   line-height: 1.3;
 }
 
 .head__subtitle {
   margin: 2px 0 0;
   padding-left: 29px;
-  font-size: var(--font-size-subtitle);
-  font-weight: var(--font-weight-regular);
+  font-size: var(--fs-subtitle);
+  font-weight: var(--fw-regular);
   line-height: 1.4;
 }
 
@@ -249,8 +249,8 @@
 
 /* The report entry point sits where the status badge normally does. */
 .chip--brand {
-  border-color: var(--color-brand-1);
-  color: var(--color-brand-1);
+  border-color: var(--brand-1);
+  color: var(--brand-1);
 }
 
 /* ---------- Ride info card ---------- */
@@ -260,22 +260,22 @@
    does: nothing should show through beside it. */
 .ride-block {
   position: sticky;
-  top: var(--head-block-height);
+  top: var(--layout-head-height);
   z-index: 1;
-  margin: 0 calc(var(--gutter) * -1);
-  padding: 0 var(--gutter) 10px;
-  background: var(--color-surface);
+  margin: 0 calc(var(--layout-gutter) * -1);
+  padding: 0 var(--layout-gutter) 10px;
+  background: var(--bg-surface);
 }
 
 .ride {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--sp-5);
   margin-top: 14px;
-  padding: 22px 24px;
-  border-radius: var(--card-radius);
-  background: var(--color-surface-navy);
-  color: var(--color-text-on-navy);
+  padding: 22px var(--sp-6);
+  border-radius: var(--radius-card);
+  background: var(--bg-navy);
+  color: var(--text-inverse);
 }
 
 .ride__row {
@@ -286,13 +286,13 @@
 
 .ride__icon {
   flex: none;
-  width: var(--icon-size);
-  height: var(--icon-size);
+  width: var(--icon-md);
+  height: var(--icon-md);
 }
 
 .ride__label {
-  font-size: var(--font-size-card-title);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--fs-card-title);
+  font-weight: var(--fw-bold);
 }
 
 .ride__ticket {
@@ -300,11 +300,11 @@
   align-items: center;
   gap: 6px;
   margin-left: auto;
-  padding: 7px 12px;
+  padding: 7px var(--sp-3);
   border-radius: 14px;
   background: rgb(255 255 255 / 0.16);
-  font-size: var(--font-size-badge);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--fs-badge);
+  font-weight: var(--fw-semibold);
 }
 
 .ride__chevron {
@@ -317,9 +317,9 @@
 
 .route {
   margin-top: 10px;
-  padding: 34px var(--gutter) 16px var(--rail-inset);
-  border-radius: var(--card-radius);
-  background: var(--color-surface-muted);
+  padding: 34px var(--layout-gutter) var(--sp-4) var(--layout-rail-inset);
+  border-radius: var(--radius-card);
+  background: var(--bg-muted);
 }
 
 .route__list {
@@ -335,14 +335,14 @@
 /* One scroll surface, the drawer's. The card used to scroll inside itself,
    which latched the gesture and left 호출 취소 below it unreachable. */
 .view:not([data-view="ride-status"]) .route {
-  padding-top: 28px;
+  padding-top: var(--sp-7);
 }
 
 /* The action bar is pinned over the drawer, so the card needs room to scroll
    its last rows clear of it. */
 .view[data-view="report-segment"] .route,
 .view[data-view="report-photos"] .route {
-  padding-bottom: calc(var(--action-bottom) + var(--action-height) + 24px);
+  padding-bottom: calc(var(--layout-action-bottom) + var(--button-height) + var(--sp-6));
 }
 
 /* Summary rows of the ride. Shares the rail layout with the Steps component
@@ -350,8 +350,8 @@
    a title and description. */
 .route-step {
   display: grid;
-  grid-template-columns: var(--anchor-width) 1fr;
-  column-gap: var(--rail-gap);
+  grid-template-columns: var(--layout-rail-width) 1fr;
+  column-gap: var(--layout-rail-gap);
 }
 
 .route-step .anchor {
@@ -359,27 +359,27 @@
 }
 
 .route-step__body {
-  padding-bottom: var(--step-gap);
+  padding-bottom: var(--layout-step-gap);
 }
 
 .route-step--last .route-step__body {
-  padding-bottom: 8px;
+  padding-bottom: var(--sp-2);
 }
 
 .route-step__headline {
   display: flex;
-  gap: 16px;
+  gap: var(--sp-4);
   margin: 0;
-  font-size: var(--font-size-route-label);
-  font-weight: var(--font-weight-bold);
+  font-size: var(--fs-route-label);
+  font-weight: var(--fw-bold);
   line-height: 20px;
   white-space: nowrap;
 }
 
 .route-step__meta {
-  margin: 8px 0 0;
-  font-size: var(--font-size-route-meta);
-  font-weight: var(--font-weight-regular);
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-route-meta);
+  font-weight: var(--fw-regular);
   line-height: 18px;
 }
 
@@ -394,11 +394,11 @@
   border: 1px solid transparent;
   border-radius: var(--chip-radius);
   background:
-    linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+    linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
     var(--gradient-brand) border-box;
-  font-size: var(--font-size-button);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-button);
+  font-size: var(--fs-button);
+  font-weight: var(--fw-medium);
+  color: var(--text-button);
   white-space: nowrap;
 
 }
@@ -474,16 +474,16 @@
 
 .route-step__body .walk-button,
 .route-step__body .chip {
-  margin-top: 8px;
+  margin-top: var(--sp-2);
 }
 
 .route__disclaimer {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin: 4px 0 0;
-  font-size: var(--font-size-disclaimer);
-  color: var(--color-text-muted);
+  margin: var(--sp-1) 0 0;
+  font-size: var(--fs-disclaimer);
+  color: var(--text-muted);
 }
 
 /* ---------- Cancel ---------- */
@@ -491,13 +491,13 @@
 .cancel {
   width: 100%;
   height: 52px;
-  margin-top: 16px;
-  border: 1px solid var(--color-border-subtle);
+  margin-top: var(--sp-4);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
-  background: var(--color-surface);
-  color: var(--color-danger);
+  background: var(--bg-surface);
+  color: var(--text-danger);
   font-size: 16px;
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--fw-semibold);
 }
 
 /* ---------- Arrival popup ----------
@@ -505,7 +505,7 @@
    offsets; the gaps below reproduce them. */
 
 .stop-alert {
-  padding: 60px 32px 28px;
+  padding: 60px var(--sp-8) var(--sp-7);
   text-align: center;
 }
 
@@ -521,45 +521,45 @@
   height: 64px;
   margin: 0 auto;
   border-radius: 50%;
-  background: var(--color-brand-1);
-  color: var(--color-surface);
+  background: var(--brand-1);
+  color: var(--bg-surface);
 }
 
 .stop-alert__badge .icon {
-  --icon-size: 32px;
+  --icon-md: 32px;
 }
 
 .stop-alert__title {
   margin: 14px 0 0;
   font-size: 17px;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 
 .stop-alert__card {
-  margin-top: 28px;
-  padding: 28px 16px 24px;
-  border-radius: var(--card-radius);
+  margin-top: var(--sp-7);
+  padding: var(--sp-7) var(--sp-4) var(--sp-6);
+  border-radius: var(--radius-card);
   background: var(--stop-alert-card-bg);
 }
 
 .stop-alert__code {
   margin: 0;
   font-size: 22px;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-brand-1);
+  font-weight: var(--fw-bold);
+  color: var(--brand-1);
 }
 
 .stop-alert__desc {
-  margin: 12px 0 0;
+  margin: var(--sp-3) 0 0;
   font-size: 15px;
   line-height: 1.33;
-  color: var(--stop-alert-desc);
+  color: var(--stop-alert-desc-text);
 }
 
 .stop-alert__desc strong {
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-brand-1);
+  font-weight: var(--fw-semibold);
+  color: var(--brand-1);
 }
 
 .stop-alert__actions {
@@ -572,40 +572,40 @@
 .stop-alert__confirm {
   width: 100%;
   height: 55px;
-  margin-top: 24px;
-  border: 1px solid var(--color-border-subtle);
+  margin-top: var(--sp-6);
+  border: 1px solid var(--border-subtle);
   border-radius: 17px;
-  background: var(--color-surface);
+  background: var(--bg-surface);
   font-size: 18px;
-  font-weight: var(--font-weight-regular);
+  font-weight: var(--fw-regular);
 }
 
 /* Short variant: a question instead of stop details, so no info card. */
 .stop-alert--compact {
-  padding-top: 40px;
+  padding-top: var(--sp-10);
 }
 
 .stop-alert__lead {
-  margin: 12px 0 0;
+  margin: var(--sp-3) 0 0;
   font-size: 16px;
   line-height: 1.45;
-  color: var(--stop-alert-desc);
+  color: var(--stop-alert-desc-text);
 }
 
 .stop-alert__buttons {
   display: flex;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 
 .stop-alert__buttons .stop-alert__confirm {
   flex: 1;
-  margin-top: 28px;
+  margin-top: var(--sp-7);
 }
 
 .stop-alert__confirm--primary {
-  border-color: var(--color-brand-1);
-  color: var(--color-brand-1);
-  font-weight: var(--font-weight-semibold);
+  border-color: var(--brand-1);
+  color: var(--brand-1);
+  font-weight: var(--fw-semibold);
 }
 
 /* ---------- Opening notice ----------
@@ -614,9 +614,9 @@
    white type, the app mark on top. */
 
 .intro {
-  padding: 40px 32px 28px;
+  padding: var(--sp-10) var(--sp-8) var(--sp-7);
   background: var(--intro-bg);
-  color: var(--intro-fg);
+  color: var(--intro-text);
   text-align: center;
 }
 
@@ -624,20 +624,20 @@
   width: 56px;
   height: 56px;
   margin: 0 auto;
-  border-radius: var(--card-radius);
-  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
   object-fit: cover;
 }
 
 .intro__title {
-  margin: 20px 0 0;
+  margin: var(--sp-5) 0 0;
   font-size: 17px;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 
 .intro__lead {
-  margin: 12px 0 0;
+  margin: var(--sp-3) 0 0;
   font-size: 16px;
   line-height: 1.45;
 }
@@ -645,12 +645,12 @@
 .intro__start {
   width: 100%;
   height: 55px;
-  margin-top: 28px;
+  margin-top: var(--sp-7);
   border-radius: 17px;
-  background: var(--color-surface);
-  color: var(--color-brand-1);
+  background: var(--bg-surface);
+  color: var(--brand-1);
   font-size: 18px;
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--fw-semibold);
 }
 
 /* ---------- Primary action bar ----------
@@ -668,24 +668,24 @@
   /* Sits the same distance off the bottom of whatever viewport it lands in,
      dropping to the home indicator's height where there is one rather than
      stacking on top of it. */
-  padding-bottom: max(var(--action-bottom), env(safe-area-inset-bottom));
-  padding-top: 48px;
+  padding-bottom: max(var(--layout-action-bottom), env(safe-area-inset-bottom));
+  padding-top: var(--sp-12);
   background: linear-gradient(
     180deg,
     rgb(247 247 250 / 0) 0%,
-    var(--color-surface-muted) 35%
+    var(--bg-muted) 35%
   );
   pointer-events: none;
 }
 
 .action {
-  width: var(--action-width);
-  height: var(--action-height);
-  border-radius: var(--action-radius);
-  background: var(--action-bg);
-  color: var(--color-surface);
+  width: var(--button-width);
+  height: var(--button-height);
+  border-radius: var(--button-radius);
+  background: var(--button-primary-bg);
+  color: var(--bg-surface);
   font-size: 18px;
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--fw-medium);
   pointer-events: auto;
 }
 
@@ -702,18 +702,18 @@
   width: min(259px, calc(100% - 32px));
   height: 52px;
   padding-left: 15px;
-  border: 1px solid var(--color-border-strong);
+  border: 1px solid var(--border-strong);
   border-radius: 24px;
-  background: var(--color-surface);
+  background: var(--bg-surface);
   box-shadow: var(--shadow-hint);
-  font-size: var(--font-size-hint);
-  color: var(--color-text-body);
+  font-size: var(--fs-hint);
+  color: var(--text-body);
   white-space: nowrap;
 }
 
 .hint em {
   font-style: normal;
-  color: var(--color-danger);
+  color: var(--text-danger);
 }
 
 /* Once the real 호출 취소 button is fully in view the hint has nothing left to

@@ -19,7 +19,7 @@
 
 .badge {
   --badge-bg: var(--badge-easy-bg);
-  --badge-fg: var(--badge-easy-fg);
+  --badge-fg: var(--badge-easy-text);
 
   display: inline-flex;
   align-items: center;
@@ -29,8 +29,8 @@
   border-radius: var(--badge-radius);
   background: var(--badge-bg);
   color: var(--badge-fg);
-  font-size: var(--font-size-badge);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--fs-badge);
+  font-weight: var(--fw-semibold);
   white-space: nowrap;
   transition:
     background-color 240ms ease,
@@ -39,17 +39,17 @@
 
 .badge[data-state="여유"] {
   --badge-bg: var(--badge-easy-bg);
-  --badge-fg: var(--badge-easy-fg);
+  --badge-fg: var(--badge-easy-text);
 }
 
 .badge[data-state="바쁨"] {
   --badge-bg: var(--badge-busy-bg);
-  --badge-fg: var(--badge-busy-fg);
+  --badge-fg: var(--badge-busy-text);
 }
 
 .badge[data-state="늦음"] {
   --badge-bg: var(--badge-late-bg);
-  --badge-fg: var(--badge-late-fg);
+  --badge-fg: var(--badge-late-text);
 }
 
 .badge__icon {
