@@ -1,3 +1,6 @@
 .DS_Store
 Thumbs.db
 .claude/
+
+# The design system reference is local only — it reads ../shared live.
+wiki/
