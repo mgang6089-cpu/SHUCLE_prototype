@@ -48,7 +48,7 @@
   font-weight: var(--fw-bold);
 }
 
-/* Reads as a ticket stub: the same navy, lifted a touch by a white wash. */
+/* The same navy, lightened with a white overlay. */
 .ride__ticket {
   display: inline-flex;
   align-items: center;

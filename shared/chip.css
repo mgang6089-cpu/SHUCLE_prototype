@@ -88,9 +88,9 @@
 
 }
 /* ---------- Call to action ----------
-   The one control the viewer is meant to press on a given screen: a highlight
-   travels its border like a reflection while the glow beneath breathes in
-   step. Worn by 도보 안내 시작하기 and 사진 제보. */
+   Emphasis for the control a screen expects to be pressed: a highlight
+   travels the border while a glow pulses on the same interval. Applied to
+   도보 안내 시작하기 and 사진 제보. */
 
 .chip--walk,
 .chip--brand {
@@ -98,8 +98,8 @@
   animation: cta-glow 3200ms ease-in-out infinite;
 }
 
-/* Sits over the border and is masked down to the 1px ring, so only the edge
-   catches the light. */
+/* Covers the border and is masked down to the 1px ring, so only the edge
+   shows the highlight. */
 .chip--walk::after,
 .chip--brand::after {
   content: "";

@@ -21,16 +21,10 @@
 
 .steps {
   --steps-min-height: 84px;
-  --steps-fs-title: 18px;
-  --steps-fs-desc: 15px;
   --steps-title-gap: var(--sp-3);    /* title pb 10 + column gap 2 */
   --steps-action-gap: var(--sp-6);   /* below a step's action, e.g. 크게 보기 */
 
-  --steps-text-passed: #8d8d8d;      /* 지나옴 */
-  --steps-text-current: var(--text-strong); /* 이동중 */
-  --steps-text-upcoming: #7b849c;    /* 이동예정 · 도착예정 · 탑승 */
-
-  --steps-fg: var(--steps-text-upcoming);
+  --steps-fg: var(--text-upcoming);
 
   display: grid;
   grid-template-columns: var(--layout-rail-width) 1fr;
@@ -41,23 +35,23 @@
 }
 
 .steps[data-state="지나옴"] {
-  --steps-fg: var(--steps-text-passed);
+  --steps-fg: var(--text-passed);
 }
 
 .steps[data-state="이동중"] {
-  --steps-fg: var(--steps-text-current);
+  --steps-fg: var(--text-strong);
 }
 
 .steps--tappable {
   cursor: pointer;
 }
 
-/* Anchors an overlay such as the picker's close button. */
+/* Positioning context for an overlay such as the picker's close button. */
 .steps__body--relative {
   position: relative;
 }
 
-/* The final node has no trail, so it doesn't need a row's worth of height. */
+/* The final node has no trail, so it needs no row height. */
 .steps--last {
   min-height: 0;
 }
@@ -69,7 +63,7 @@
   min-width: 0;
 }
 
-/* The text is held to its column width; the photo strip below is free to run
+/* The text is limited to the column width. The photo strip below may exceed
    wider than it and scroll. */
 .steps__title,
 .steps__desc {
@@ -78,14 +72,14 @@
 
 .steps__title {
   margin: 0;
-  font-size: var(--steps-fs-title);
+  font-size: var(--fs-step-title);
   font-weight: var(--fw-bold);
   line-height: 1.2;
 }
 
 .steps__desc {
   margin: var(--steps-title-gap) 0 0;
-  font-size: var(--steps-fs-desc);
+  font-size: var(--fs-step-desc);
   font-weight: var(--fw-regular);
   line-height: 1.4;
 }
@@ -97,7 +91,7 @@
   font-weight: var(--fw-regular);
 }
 
-/* Legs the rider hasn't reached yet show their photos held back. */
+/* Steps not yet reached show their photos at reduced opacity. */
 .steps:not([data-state="이동중"]) .photo-card {
   opacity: 0.5;
 }
@@ -107,7 +101,7 @@
   margin-bottom: var(--steps-action-gap);
 }
 
-/* No action under the photos — the strip itself carries the closing gap. */
+/* With no action below the photos, the strip carries the closing gap. */
 .photo-strip:last-child {
   margin-bottom: var(--steps-action-gap);
 }

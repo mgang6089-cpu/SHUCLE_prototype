@@ -1,5 +1,5 @@
 /* ============================================================
-   Badge — how tight the rider's timing is
+   Badge — whether the journey is on schedule
    Figma: component set 182:784, three State variants.
 
    Markup:
@@ -8,13 +8,13 @@
        <span class="badge__label">여유로워요</span>
      </span>
 
-   The three variants ship as separate icon files, but their path data is
-   identical down to a rounding digit — only the fill differs. So the icon is
-   one mask tinted by the badge's own `color`, which means a state change is a
-   plain color transition on two properties, not an asset swap.
+   The three variants ship as separate icon files, but the path data is
+   identical apart from the fill. The icon is therefore one mask tinted by the
+   badge's own color, and a state change is a color transition on two
+   properties rather than an asset swap.
 
-   Changing data-state does not change the label text: swap that too when the
-   state changes (the label is its own element so it can be crossfaded later).
+   Changing data-state does not change the label text. Change both; the label
+   is a separate element so it can be crossfaded later.
    ============================================================ */
 
 .badge {
@@ -25,18 +25,8 @@
   --badge-icon-width: 9px;
   --badge-icon-height: 16px;
 
-  /* One shape, three colour pairs; the three tinted greys are the same
-     channels permuted. 여유's blue is the brand blue, so it says so. */
-  --badge-easy-bg: #f3f3f6;
-  --badge-easy-text: var(--brand-1);
-  --badge-busy-bg: #f6f5f3;
-  --badge-busy-text: #c59129;
-  --badge-late-bg: #f6f3f3;
-  --badge-late-text: #b14141;        /* the 늦음 icon ships as #b04141 — one step
-                                        off its own label; treated as the same */
-
-  --badge-bg: var(--badge-easy-bg);
-  --badge-fg: var(--badge-easy-text);
+  --badge-bg: var(--bg-subtle);
+  --badge-fg: var(--brand-1);
 
   display: inline-flex;
   align-items: center;
@@ -55,8 +45,8 @@
 }
 
 .badge[data-state="여유"] {
-  --badge-bg: var(--badge-easy-bg);
-  --badge-fg: var(--badge-easy-text);
+  --badge-bg: var(--bg-subtle);
+  --badge-fg: var(--brand-1);
 }
 
 .badge[data-state="바쁨"] {

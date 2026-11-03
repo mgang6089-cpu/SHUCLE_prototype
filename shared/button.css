@@ -1,23 +1,23 @@
 /* ============================================================
-   Button — a full-width control the screen is waiting on
+   Button — a full-width control
 
    Markup:
      <button class="button button--primary" type="button">사진 추가하기</button>
 
-   Five variants, all the same shape: a full-width block with a large radius
-   and 18px type. They differ in what they are asking for — the one blue filled
-   action, the outlined pair in a popup, the inverted one on the intro's blue
-   ground, and 호출 취소, which is the only destructive one and says so in red.
+   Five variants with the same shape: a full-width block with a large radius
+   and 18px type. They differ by role — one filled primary action, an outlined
+   pair for popups, an inverted one for the intro's blue ground, and 호출 취소,
+   which is the only destructive action and uses the danger color.
 
-   Smaller controls are not Buttons: a pill with an icon and 13px type is a
-   Chip, and a square with only an icon in it is an IconButton.
+   Smaller controls are not Buttons. A pill with an icon and 13px type is a
+   Chip; a square containing only an icon is an IconButton.
 
    The reset (border, background, cursor, inherited font) comes from base.css.
    ============================================================ */
 
-/* On :root rather than on .button, because the shell measures the action bar's
-   footprint against it so the route card can scroll its last rows clear of the
-   floating button. One declaration, two readers. */
+/* On :root rather than on .button: the shell uses the same value to calculate
+   how much the action bar covers, so the route card can scroll its last rows
+   clear of it. One declaration, two readers. */
 :root {
   --button-height: 56px;             /* [figma] 55, snapped */
 }
@@ -25,32 +25,30 @@
 .button {
   --button-width: min(344px, calc(100% - 32px)); /* [figma] 343, snapped */
   --button-radius: 17px;             /* [figma] */
-  --button-primary-bg: #3560ee;      /* [figma] */
-  --button-fs: 18px;
 
   width: 100%;
   height: var(--button-height);
   border: 1px solid transparent;
   border-radius: var(--button-radius);
   background: var(--bg-surface);
-  font-size: var(--button-fs);
+  font-size: var(--fs-action);
   font-weight: var(--fw-regular);
 }
 
-/* The one control the screen is built around. Narrower than full width because
-   it floats over the drawer rather than sitting in its flow, and it takes its
-   pointer events back from the bar's pass-through. */
+/* The screen's primary action. Narrower than full width because it floats
+   over the drawer rather than sitting in its flow, and it restores its own
+   pointer events, which the bar disables. */
 .button--primary {
   width: var(--button-width);
-  background: var(--button-primary-bg);
+  background: var(--bg-accent);
   color: var(--bg-surface);
   font-weight: var(--fw-medium);
   pointer-events: auto;
 }
 
-/* 호출 취소 — the only button that undoes something, so it is the only one
-   carrying the danger color. Shorter and tighter-cornered than the rest; both
-   figures are measured and kept, and both are in the wiki's log. */
+/* 호출 취소. The only destructive action, so the only one using the danger
+   color. Shorter with a smaller radius than the other variants; both are
+   measured values. */
 .button--cancel {
   height: 52px;
   margin-top: var(--sp-4);
@@ -61,21 +59,21 @@
   font-weight: var(--fw-semibold);
 }
 
-/* Popup buttons. Side by side they split the row; alone one fills it. */
+/* Popup buttons. Two side by side split the row; one alone fills it. */
 .button--modal {
   height: 55px;
   margin-top: var(--sp-6);
   border-color: var(--border-subtle);
 }
 
-/* The answer the popup is steering towards. */
+/* The popup's default choice. */
 .button--modal-accent {
   border-color: var(--brand-1);
   color: var(--brand-1);
   font-weight: var(--fw-semibold);
 }
 
-/* Sits on the intro's blue ground, so the colors swap: white block, blue type. */
+/* For the intro's blue ground: white block, blue type. */
 .button--invert {
   height: 55px;
   margin-top: var(--sp-7);

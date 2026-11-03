@@ -1,113 +1,123 @@
 /* ============================================================
-   Shucle — design tokens (single source of truth)
+   Shucle — design tokens
 
-   Every value below is measured, not estimated.
    Source tags:
-     [figma]    read from a real Figma layer via the Dev Mode MCP
-     [svg]      read from a `fill` attribute in an exported Figma icon
-     [px]       sampled from the reference screenshot's pixels
+     [figma]    read from a Figma layer via the Dev Mode MCP
+     [svg]      read from a fill attribute in an exported icon
+     [px]       sampled from the reference screenshot
      [designer] given directly by the designer
 
-   Naming
-     --brand-*    the two brand colors and anything built from them
-     --bg-*       surfaces and fills
-     --text-*     type colors
-     --border-*   outline colors
-     --shadow-*   elevation
-     --route-*    the route's state colors, shared by Anchor, Steps and Select
-     --fs-*       font size          --fw-*      font weight
-     --sp-*       the spacing scale, in multiples of 4
-     --radius-*   corner radii       --dur-*     durations
-     --icon-*     icon box sizes
+   Prefixes:
+     --brand-     brand colours and the gradients built from them
+     --bg-        surfaces and fills
+     --text-      type colours
+     --border-    outline colours
+     --shadow-    elevation
+     --route-     route state colours
+     --badge-     badge state colours
+     --fs-        font size
+     --fw-        font weight
+     --sp-        spacing scale, in multiples of 4
+     --radius-    corner radius
+     --dur-       duration
+     --icon-      icon box size
 
-   Spacing snaps to the --sp-* scale. Typography, radii, icon sizes and marker
-   geometry keep their measured values — rounding those would move the drawing,
-   not the rhythm. Off-scale spacing is left measured too and listed in the
-   wiki's log rather than quietly nudged.
+   Spacing uses the --sp-* scale. Typography, radii, icon sizes and marker
+   geometry keep their measured values.
 
-   Where the file ends is deliberate. Colour, type, spacing, radii, motion and
-   icon sizes are decisions a designer makes, and changing one changes the
-   product's manner. The file stops there.
-
-   Two kinds of number are therefore NOT here:
-
-     component values   --chip-height, --badge-easy-bg, --anchor-dot-pitch …
-                        Decisions too, but about one component, so they sit on
-                        that component's block selector in its own stylesheet.
-
-     shell constants    --layout-* in app.css. These exist because of how the
-                        shell is built — the drawer rests at 120px because the
-                        map crop came out 120px tall — not because anyone chose
-                        them. Carried to another product they mean nothing.
-
-   Where a shell constant is really a spacing step applied somewhere, it points
-   back at the scale here, so the decision stays in one place.
+   Component dimensions (--chip-height, --anchor-dot-pitch, --modal-width and
+   the like) are declared on the component's own block selector in its
+   stylesheet. Shell dimensions (--layout-*) are declared in app.css.
    ============================================================ */
 
 :root {
   /* ---------- Brand ---------- */
-  --brand-1: #2462f7;                /* [figma] badge text, walk icon  [px] boarding/alight marker + ride line */
-  --brand-2: #0be04a;                /* [designer] gradient end */
+  --brand-1: #2462f7;                /* [figma] badge label, walk icon
+                                        [px] boarding marker, ride line */
+  --brand-2: #0be04a;                /* [designer] gradient end only */
   --gradient-brand: linear-gradient(
     90deg,
     var(--brand-1),
     var(--brand-2)
-  );                                 /* [designer] left → right, walk button border */
+  );                                 /* [designer] walk chip border */
+  --gradient-select: linear-gradient(
+    180deg,
+    var(--brand-1),
+    var(--route-boarding)
+  );                                 /* [svg] selected marker ring */
 
   /* ---------- Background ---------- */
-  --bg-surface: #ffffff;             /* [px] sheet */
+  --bg-surface: #ffffff;             /* [px] drawer, cards, popups */
   --bg-muted: #f7f7fa;               /* [figma][px] route timeline card */
-  --bg-navy: #0d2253;                /* [px] ride info card */
-  --bg-handle: #ececec;              /* [px] sheet grab handle */
-  --bg-map-edge: #f2f2ef;            /* [px] the map's own bottom edge, so the
-                                        strip the rising drawer uncovers reads
-                                        as more map rather than a white gap */
+  --bg-subtle: #f3f3f6;              /* [figma] badge 여유 ground, popup stop card */
+  --bg-navy: #0d2253;                /* [px] ride card */
+  --bg-accent: #3560ee;              /* [figma] primary button fill */
+  --bg-placeholder: #b9b9b9;         /* [figma] add-photo tile */
+  --bg-handle: #ececec;              /* [px] drawer handle */
+  --bg-map-edge: #f2f2ef;            /* [px] the map image's own bottom edge,
+                                        used for the strip below it */
+  --bg-backdrop: rgb(0 0 0 / 0.45);  /* behind an open popup */
 
   /* ---------- Text ---------- */
-  --text-strong: #000000;            /* [figma] route labels, sheet title */
-  --text-body: #121212;              /* [figma] hint sheet body */
-  --text-button: #222222;            /* [figma][svg] button label + icon */
-  --text-secondary: #414141;         /* [figma][svg] a label that is not the
-                                        headline — Chip and IconButton both
-                                        use it, so it is global */
-  --text-muted: #9a9ba3;             /* disclaimer — antialiased, approximate */
-  --text-danger: #ec083c;            /* [figma][svg] 호출 취소 accent */
-  /* The same white as the surface, deliberately linked: type on the navy card
-     should stay whatever white the app's paper is. */
-  --text-inverse: var(--bg-surface);
+  --text-strong: #000000;            /* [figma] titles, route labels, current step */
+  --text-body: #121212;              /* [figma] hint body */
+  --text-notice: #161615;            /* [figma] push banner */
+  --text-button: #222222;            /* [figma][svg] button label and icon */
+  --text-secondary: #414141;         /* [figma][svg] chip label, icon button,
+                                        picker prompt */
+  --text-tertiary: #656565;          /* [figma] popup description */
+  --text-timestamp: #6c6c6c;         /* [figma] banner time */
+  --text-passed: #8d8d8d;            /* [figma] a step already walked */
+  --text-muted: #9a9ba3;             /* disclaimer; measured off antialiased type */
+  --text-upcoming: #7b849c;          /* steps not reached yet */
+  --text-disabled: #a9a9a9;          /* [figma] picker disclaimer. The route's
+                                        지나옴 state is the same grey */
+  --text-placeholder: #cccccc;       /* [figma] empty input */
+  --text-selected: #3b5acb;          /* [figma] picked row */
+  --text-danger: #ec083c;            /* [figma][svg] 호출 취소 */
+  --text-inverse: var(--bg-surface); /* type on the navy card and the intro */
 
-  /* ---------- Border & shadow ---------- */
-  --border-strong: #45464c;          /* [figma] hint sheet border */
-  --border-subtle: #e8e8ec;          /* [figma] chip and button outline.
-                                        Two off Select's field border (#e6e6ea);
-                                        both were measured, so both stay. */
+  /* ---------- Border and shadow ---------- */
+  --border-strong: #45464c;          /* [figma] hint outline */
+  --border-subtle: #e8e8ec;          /* [figma] chip, button and input outline */
   --shadow-hint: 2px 2px 8px rgb(0 0 0 / 0.25);  /* [figma] */
-  --shadow-float: 0 2px 6px rgb(0 0 0 / 0.12);
-  --shadow-sheet: 0 -2px 16px rgb(0 0 0 / 0.08);
+  --shadow-float: 0 2px 6px rgb(0 0 0 / 0.12);   /* map controls */
+  --shadow-sheet: 0 -2px 16px rgb(0 0 0 / 0.08); /* above the drawer */
 
-  /* ---------- Route state colors ----------
-     The route's five states, from the Figma Anchor set. Global rather than
-     Anchor's own, because Steps colors its type from the same states and
-     Select's picked marker is built from the boarding navy. */
+  /* ---------- Route states ----------
+     [figma] Anchor component set 182:328. Anchor paints the marker, Steps
+     takes its type colour from the same state, Select builds its ring from
+     the boarding navy. */
   --route-boarding: #052e94;         /* 탑승 ring */
-  --route-boarding-trail: #143074;   /* 탑승 dots, and where an arriving line lands */
-  --route-pending: #748bc3;          /* 이동예정 ring + dots, 도착예정 dots */
-  --route-active: var(--brand-1);    /* 도착예정 ring, 이동중 ring + line */
-  --route-passed: #a9a9a9;           /* 지나옴 */
-  --route-terminal: #fe3559;         /* [px] final 도착 node — not in the Figma set */
+  --route-boarding-trail: #143074;   /* 탑승 dots; also where an arriving line ends */
+  --route-pending: #748bc3;          /* 이동예정 ring and dots, 도착예정 dots */
+  --route-active: var(--brand-1);    /* 도착예정 ring, 이동중 ring and line */
+  --route-passed: var(--text-disabled); /* 지나옴 */
+  --route-terminal: #fe3559;         /* [px] final 도착 node; not in the Figma set */
+
+  /* ---------- Badge states ----------
+     [figma] Badge component set 182:784. 여유 uses --bg-subtle and --brand-1.
+     The other two tints are specific to the badge. */
+  --badge-busy-bg: #f6f5f3;
+  --badge-busy-text: #c59129;
+  --badge-late-bg: #f6f3f3;
+  --badge-late-text: #b14141;        /* the 늦음 icon file ships #b04141 */
 
   /* ---------- Typography ---------- */
   --font-family: "Pretendard Variable", Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, "Malgun Gothic", sans-serif;
 
-  --fs-title: 22px;                  /* [px] sheet title */
-  --fs-subtitle: 16px;               /* [px] sheet subtitle */
+  --fs-title: 22px;                  /* [px] drawer title */
+  --fs-action: 18px;                 /* [figma] full-width button */
+  --fs-step-title: 18px;             /* [figma] walking step title */
   --fs-route-label: 17px;            /* [figma] 출발 / 도보 19분 */
-  --fs-route-meta: 15px;             /* [figma] 1166m */
   --fs-card-title: 17px;             /* [px] D1호차 */
+  --fs-subtitle: 16px;               /* [px] drawer subtitle */
+  --fs-route-meta: 15px;             /* [figma] 1166m */
+  --fs-step-desc: 15px;              /* [figma] walking step description */
+  --fs-hint: 15px;                   /* [figma] floating hint */
   --fs-badge: 14px;                  /* [figma] 여유로워요 */
-  --fs-button: 13px;                 /* [figma] 도보 안내 시작하기 */
-  --fs-hint: 15px;                   /* [figma] hint sheet */
+  --fs-button: 13px;                 /* [figma] chip label */
   --fs-disclaimer: 13px;
 
   --fw-regular: 400;
@@ -116,9 +126,8 @@
   --fw-bold: 700;
 
   /* ---------- Spacing ----------
-     Multiples of 4, numbered by the multiple: --sp-6 is 6 × 4 = 24px. Only
-     steps the design actually uses are declared; a gap in the numbering means
-     nothing is that far apart yet. */
+     Multiples of 4. The number is the multiple: --sp-6 is 6 x 4 = 24px. Only
+     the steps the design uses are declared. */
   --sp-1: 4px;
   --sp-2: 8px;
   --sp-3: 12px;
@@ -131,13 +140,18 @@
   --sp-12: 48px;
 
   /* ---------- Radius ---------- */
-  --radius-sheet: 20px;
-  --radius-card: 16px;
+  --radius-sheet: 20px;              /* drawer top corners */
+  --radius-card: 16px;               /* cards, photos, inputs */
 
   /* ---------- Duration ---------- */
-  --dur-state: 180ms;                /* color settling between route states */
-  --dur-route-step: 2100ms;          /* how long one leg takes to travel */
-  --dur-sheet-dip: 760ms;
+  --dur-state: 180ms;                /* route state colour transition */
+  --dur-route-step: 2100ms;          /* one leg of the walk */
+  --dur-sheet-dip: 760ms;            /* drawer drop and return */
+  --dur-notice-delay: 2000ms;        /* screen settles, then the banner arrives */
+  --dur-notice-hold: 5000ms;         /* banner stays. Matches the OS default:
+                                        iOS temporary banners and Android
+                                        heads-up notifications both hold about
+                                        five seconds */
 
   /* ---------- Icons ---------- */
   --icon-md: 24px;                   /* exported icons use a 24x24 artboard */

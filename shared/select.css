@@ -1,5 +1,5 @@
 /* ============================================================
-   Select — a Steps row the rider picks, for reporting photos
+   Select — a Steps row that can be selected, for reporting photos
    Figma: "Select" component (195:691, 195:947, 197:1174).
 
      <li class="steps select" data-state="지나옴" data-selected>
@@ -7,40 +7,28 @@
        <div class="steps__body"> … </div>
      </li>
 
-   It is a Steps row with a selected state layered on: picked, the copy turns
-   brand blue, its photos come back to full strength, and the marker fills with
-   the blue-to-navy gradient. Unpicked rows stay as the greyed-out 지나옴 leg
-   they already were.
+   A Steps row with a selected state added. When selected, the text turns
+   brand blue, its photos return to full opacity, and the marker fills with
+   the blue-to-navy gradient. Unselected rows keep the greyed 지나옴
+   appearance.
    ============================================================ */
 
-/* A Select row is a Steps row — <li class="steps select"> — so Steps' own
-   type size, title gap and action gap are inherited rather than restated
-   here. Only what the picker adds is declared. */
+/* A Select row is also a Steps row, so Steps' type size, title gap and
+   action gap are inherited rather than restated here. Only what the picker
+   adds is declared. */
 .select {
-  --select-text: #3b5acb;            /* [figma] picked row's copy */
-  --select-prompt-text: #414141;     /* [figma] — same value as --text-secondary,
-                                        measured separately on this screen */
-  --select-disclaimer-text: #a9a9a9; /* [figma] — same value as 지나옴 */
-  --select-field-border: #e6e6ea;    /* [figma] two off --border-subtle */
-  --select-placeholder-text: #cccccc; /* [figma] */
-  --gradient-select: linear-gradient(
-    180deg,
-    var(--brand-1),
-    var(--route-boarding)
-  );                                 /* [svg] picked marker ring */
-
   cursor: pointer;
 }
 
 .select[data-selected] {
-  --steps-fg: var(--select-text);
+  --steps-fg: var(--text-selected);
 }
 
 .select[data-selected] .photo-card {
   opacity: 1;
 }
 
-/* A border can't hold a gradient, so the ring is painted across the whole
+/* border does not accept a gradient, so the ring is painted across the whole
    circle and the hole is masked back out. */
 .select[data-selected] .anchor__ring {
   border-color: transparent;
@@ -54,7 +42,7 @@
   mask-image: radial-gradient(circle at center, transparent 2.75px, #000 3.25px);
 }
 
-/* Everything but the photo strip shares the text column's width, so the whole
+/* Every element except the photo strip uses the text column's width, so the
    body lines up on one right edge instead of running to the card's. */
 .select__prompt,
 .select__label,
@@ -63,17 +51,17 @@
   max-width: var(--layout-body-width);
 }
 
-/* A row being reported drops its own description for the picker's prompt. */
+/* A selected row replaces its description with the picker's prompt. */
 .select__prompt {
   margin: var(--steps-title-gap) 0 0;
-  font-size: var(--steps-fs-desc);
-  color: var(--select-prompt-text);
+  font-size: var(--fs-step-desc);
+  color: var(--text-secondary);
 }
 
 .select__label {
   margin: var(--steps-action-gap) 0 0;
-  font-size: var(--steps-fs-desc);
-  color: var(--select-prompt-text);
+  font-size: var(--fs-step-desc);
+  color: var(--text-secondary);
 }
 
 .select__note {
@@ -81,23 +69,23 @@
   height: 120px;
   margin-top: var(--sp-2);
   padding: var(--sp-4) 18px;
-  border: 1px solid var(--select-field-border);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
   background: var(--bg-surface);
   font: inherit;
-  font-size: var(--steps-fs-desc);
+  font-size: var(--fs-step-desc);
   line-height: 1.5;
   resize: none;
 }
 
 .select__note::placeholder {
-  color: var(--select-placeholder-text);
+  color: var(--text-placeholder);
 }
 
 .select__disclaimer {
   margin: var(--steps-action-gap) 0 0;
-  font-size: var(--steps-fs-desc);
+  font-size: var(--fs-step-desc);
   line-height: 1.5;
   text-align: center;
-  color: var(--select-disclaimer-text);
+  color: var(--text-disabled);
 }

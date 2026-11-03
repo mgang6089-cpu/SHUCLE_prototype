@@ -110,8 +110,8 @@
     const notice = document.querySelector('.notice:not(.is-view-hidden)');
     if (!notice) return 0;
     const delay =
-      parseFloat(notice.dataset.delay) || token(notice, '--notice-delay', 2000);
-    return delay + token(notice, '--notice-hold', 5000) + 600;
+      parseFloat(notice.dataset.delay) || token(notice, '--dur-notice-delay', 2000);
+    return delay + token(notice, '--dur-notice-hold', 5000) + 600;
   };
 
   const start = (view) => {

@@ -27,7 +27,6 @@
   --photo-card-height: 116px;        /* [figma] 117, snapped */
   --photo-card-gap: var(--sp-1);     /* [figma] */
   --photo-card-tile-size: 120px;     /* [figma] the picker's square */
-  --photo-card-add-bg: #b9b9b9;      /* [figma] */
 
   display: flex;
   gap: var(--photo-card-gap);
@@ -37,7 +36,7 @@
   overscroll-behavior-x: contain;
 }
 
-/* The picker opens with more air above it than a guidance strip does. */
+/* The picker's strip has more space above it than a guidance strip. */
 .photo-strip--picker {
   margin-top: var(--sp-4);
 }
@@ -58,9 +57,9 @@
   object-fit: cover;
 }
 
-/* A lone photo stops at the body's width (260px in Figma) rather than running
-   out to where a second one would sit, so its right edge lines up with the
-   text above it. A pair deliberately overruns and gets clipped. */
+/* A single photo stops at the body width (260px in Figma) instead of
+   extending to where a second one would sit, so its right edge aligns with
+   the text above. Two or more deliberately overflow and are clipped. */
 .photo-card--wide {
   width: var(--layout-body-width);
 }
@@ -74,11 +73,11 @@
   border: 2px solid var(--brand-1);
 }
 
-/* Not a photo but the slot where another one would go. */
+/* The control for adding a photo, sized as a tile. */
 .photo-card--add {
   display: grid;
   place-items: center;
-  background: var(--photo-card-add-bg);
+  background: var(--bg-placeholder);
   color: var(--bg-surface);
 }
 

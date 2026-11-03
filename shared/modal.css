@@ -14,20 +14,11 @@
    ============================================================ */
 
 .modal {
-  --modal-backdrop: rgb(0 0 0 / 0.45);
+  --bg-backdrop: rgb(0 0 0 / 0.45);
   --modal-width: min(369px, calc(100% - 24px)); /* [figma] 186:887 — 12px each side */
   --modal-radius: 24px;              /* [figma] */
   --modal-bottom: var(--sp-10);      /* measured 38 in the shipped app, rounded
                                         to the spacing scale */
-
-  --stop-alert-card-bg: #f3f3f6;     /* [figma] — same value as Badge 여유's
-                                        ground, measured separately */
-  --stop-alert-desc-text: #656565;   /* [figma] */
-
-  /* The opening notice is about the prototype, not inside the product, so it
-     inverts: brand blue ground, white type. */
-  --intro-bg: var(--brand-1);
-  --intro-text: var(--bg-surface);
 
   position: absolute;
   inset: 0;
@@ -44,7 +35,7 @@
 .modal__backdrop {
   position: absolute;
   inset: 0;
-  background: var(--modal-backdrop);
+  background: var(--bg-backdrop);
   animation: modal-dim 200ms ease both;
 }
 
@@ -90,7 +81,7 @@
   margin: 0 auto;
 }
 
-/* Stands in for the pin when the popup is about the vehicle, not a stop. */
+/* Replaces the pin when the popup is about the vehicle rather than a stop. */
 .stop-alert__badge {
   display: grid;
   place-items: center;
@@ -117,7 +108,7 @@
   margin-top: var(--sp-7);
   padding: var(--sp-7) var(--sp-4) var(--sp-6);
   border-radius: var(--radius-card);
-  background: var(--stop-alert-card-bg);
+  background: var(--bg-subtle);
 }
 
 .stop-alert__code {
@@ -131,7 +122,7 @@
   margin: var(--sp-3) 0 0;
   font-size: 15px;
   line-height: 1.33;
-  color: var(--stop-alert-desc-text);
+  color: var(--text-tertiary);
 }
 
 .stop-alert__desc strong {
@@ -146,7 +137,7 @@
   margin-top: 25px;
 }
 
-/* Short variant: a question instead of stop details, so no info card. */
+/* Short variant: a question only, with no stop information card. */
 .stop-alert--compact {
   padding-top: var(--sp-10);
 }
@@ -155,7 +146,7 @@
   margin: var(--sp-3) 0 0;
   font-size: 16px;
   line-height: 1.45;
-  color: var(--stop-alert-desc-text);
+  color: var(--text-tertiary);
 }
 
 .stop-alert__buttons {
@@ -175,8 +166,8 @@
 
 .intro {
   padding: var(--sp-10) var(--sp-8) var(--sp-7);
-  background: var(--intro-bg);
-  color: var(--intro-text);
+  background: var(--brand-1);
+  color: var(--bg-surface);
   text-align: center;
 }
 

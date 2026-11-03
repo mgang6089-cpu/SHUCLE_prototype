@@ -26,7 +26,7 @@
   }
 }
 
-/* Taken out of the layout entirely, since these sit in the drawer's flow as
+/* Removed from layout, since these sit in the drawer's flow as often as they
    often as they float over it. */
 [data-for-view].is-view-hidden {
   display: none !important;

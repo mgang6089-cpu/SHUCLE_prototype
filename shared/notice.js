@@ -9,7 +9,7 @@
 
   // A banner can come in sooner than the house default with data-delay.
   const delayFor = (notice) =>
-    parseFloat(notice.dataset.delay) || token(notice, '--notice-delay', 2000);
+    parseFloat(notice.dataset.delay) || token(notice, '--dur-notice-delay', 2000);
 
   let timers = [];
 
@@ -52,7 +52,7 @@
             timers.push(
               setTimeout(
                 () => notice.classList.add('is-dismissed'),
-                token(notice, '--notice-hold', 5000)
+                token(notice, '--dur-notice-hold', 5000)
               )
             );
           }, delayFor(notice))

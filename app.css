@@ -11,18 +11,15 @@
 /* ============================================================
    Shell constants — not design tokens
 
-   These are numbers that exist because of how the shell is built, not
-   decisions a designer makes. Nobody draws "the drawer's hole is 120px"; what
-   happened is that the map was cropped 1:1 and came out 120px tall, so the
-   drawer has to rest at the same number or the image stretches. Carry them to
-   another product and they mean nothing.
+   Dimensions that follow from how the shell is built rather than from a
+   design decision. The drawer rests at 120px because the map was cropped 1:1
+   and came out 120px tall, and the two have to match or the image stretches.
 
-   They are custom properties all the same, because several unrelated rules
-   share each one and two are read from JS — and when they drift apart it shows
-   (the map stretched 3.3x once, from exactly this).
+   They are custom properties because several unrelated rules share each one
+   and two are read from JS, where a mismatch is visible.
 
-   Design decisions live in shared/tokens.css. Where a constant below is really
-   a spacing step applied somewhere, it points at the scale rather than
+   Design decisions are in shared/tokens.css. Where a constant below is a
+   spacing step applied somewhere, it references the scale instead of
    restating the number.
    ============================================================ */
 
@@ -113,8 +110,8 @@
 
 /* ---------- Map ---------- */
 
-/* Reaches far enough down to stay behind the drawer at its lowest — the
-   entrance lift and the boarding dip both uncover map, never white. */
+/* Tall enough to stay behind the drawer at its lowest position. Both the
+   entrance lift and the boarding dip uncover map, not white. */
 .map {
   position: absolute;
   inset: 0 0 auto;
@@ -130,8 +127,8 @@
   object-position: center top;
 }
 
-/* There is only so much real map in the capture, so its bottom edge is dissolved
-   into the flat ground below it rather than left as a cut line. */
+/* The capture contains a limited amount of map, so its bottom edge fades into
+   the flat ground below instead of ending at a cut line. */
 .map::after {
   content: "";
   position: absolute;
@@ -146,9 +143,9 @@
 /* The map crop still carries the app's own home button and 상담 chip. These two
    are sized and placed to sit exactly on top of them (measured: both at top
    72.7, home 40x40 at left 14, chip 73.7x36 at right 13) with ~1px to spare, so
-   the baked pair is hidden behind the live one. They exist to cover a
-   screenshot, which is why they stay with the map rather than becoming
-   components of their own. */
+   the pair in the image is hidden behind them. They exist to cover a
+   screenshot, so they stay with the map rather than becoming components of
+   their own. */
 .map__control,
 .map__consult {
   position: absolute;
@@ -202,13 +199,13 @@
     transform 560ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Held just below its resting place until the opening notice is dismissed. */
+/* Held below its resting position until the opening notice is dismissed. */
 .sheet.is-entering {
   transform: translateY(var(--layout-sheet-entrance));
 }
 
-/* Boarding is the biggest break in the journey, so the drawer drops away and
-   comes back carrying the next chapter instead of cross-fading in place. */
+/* Boarding is the largest break in the journey, so the drawer drops and
+   returns with the next section instead of cross-fading in place. */
 .sheet.is-dipping {
   animation: sheet-dip var(--dur-sheet-dip) cubic-bezier(0.33, 0, 0.2, 1);
 }
@@ -261,13 +258,13 @@
 
 /* ---------- Header ---------- */
 
-/* Which stop and when stays put while the route scrolls under it. Its own
-   padding carries the spacing, so nothing shifts at the moment it sticks. */
+/* The stop and time stay fixed while the route scrolls under them. The
+   padding is on this element, so nothing shifts when it sticks. */
 .head-block {
   position: sticky;
   top: 0;
   z-index: 2;
-  /* Bleeds past the drawer's gutters so nothing shows through at the sides. */
+  /* Extends past the drawer's gutters so nothing shows at the sides. */
   margin: 0 calc(var(--layout-gutter) * -1);
   padding: 21px var(--layout-gutter) var(--sp-3);
   background: var(--bg-surface);
@@ -311,9 +308,9 @@
 
 /* ---------- Ride info card ---------- */
 
-/* Rides along under the header — the vehicle and seat stay to hand while the
-   route scrolls. Bleeds to the drawer edges for the same reason the header
-   does: nothing should show through beside it. */
+/* Fixed under the header, so the vehicle and seat stay visible while the
+   route scrolls. Extends to the drawer edges for the same reason as the
+   header. */
 .ride-block {
   position: sticky;
   top: var(--layout-head-height);
@@ -338,12 +335,11 @@
   list-style: none;
 }
 
-/* The walking guide's rows carry their own slack (84px min-height), so the
-   card doesn't need the summary's deep top padding. The route can run long, so
-   the card holds its design height and scrolls its own contents rather than
-   growing — the drawer below it still scrolls to reach 호출 취소. */
-/* One scroll surface, the drawer's. The card used to scroll inside itself,
-   which latched the gesture and left 호출 취소 below it unreachable. */
+/* The walking guide's rows have their own 84px min-height, so the card does
+   not need the summary's top padding.
+
+   One scroll surface, the drawer's. The card previously scrolled inside
+   itself, which captured the gesture and left 호출 취소 unreachable. */
 .view:not([data-view="ride-status"]) .route {
   padding-top: var(--sp-7);
 }
@@ -412,7 +408,7 @@
 
 
 /* ---------- Primary action bar ----------
-   A full-width button pinned over the drawer while a task is in progress. The
+   A full-width button fixed over the drawer while a task is in progress. The
    fade above it lets the list scroll under without a hard edge. */
 
 .action-bar {
@@ -423,9 +419,8 @@
   z-index: 6;
   display: grid;
   place-items: center;
-  /* Sits the same distance off the bottom of whatever viewport it lands in,
-     dropping to the home indicator's height where there is one rather than
-     stacking on top of it. */
+  /* Keeps the same distance from the bottom of any viewport, using the home
+     indicator's height where there is one instead of adding to it. */
   padding-bottom: max(var(--layout-action-bottom), env(safe-area-inset-bottom));
   padding-top: var(--sp-12);
   background: linear-gradient(
@@ -463,8 +458,8 @@
   color: var(--text-danger);
 }
 
-/* Once the real 호출 취소 button is fully in view the hint has nothing left to
-   point at, so it gets out of the way. */
+/* Once the 호출 취소 button is fully in view the hint has nothing to point at,
+   so it is hidden. */
 .hint.is-hidden {
   opacity: 0;
   visibility: hidden;

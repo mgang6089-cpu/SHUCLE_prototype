@@ -26,12 +26,12 @@
   pointer-events: none;
 }
 
-/* A circle. Used over the map, where the map gives it its size and place. */
+/* A circle. Used over the map, which sets its size and position. */
 .icon-button--round {
   border-radius: 50%;
 }
 
-/* Closes what is open underneath it, so it sits in the top-right corner of the
+/* Closes the card it belongs to, so it sits in that card's top-right corner
    card it belongs to rather than in the flow. */
 .icon-button--close {
   position: absolute;
